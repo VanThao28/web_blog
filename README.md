@@ -12,3 +12,6 @@
     +php artisan migrate
 =>kiểm tra đổi DB_port trong file config->database.php
 
+*copy từ thư mục view qua public bằng webpack.mix.js
+(mix.copyDirectory)
+chạy câu lệnh npm install, npm run dev.
