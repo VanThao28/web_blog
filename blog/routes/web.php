@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+/* Admin*/
+use App\Http\Controllers\Admin\AdminUsers;
+/*end Admin*/
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,10 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-/*admin*/
-Route::get('/admin/index', function () {
-    return view('admin.index');
-})->middleware(['auth'])->name('admin.index');
+/*Admin*/
+
+Route::name('admin')->prefix('admin')->middleware(['auth'])->group(function (){
+    Route::get('/index', [AdminUsers::class, 'index'])->name('.index');
+});
 
 require __DIR__.'/auth.php';
 

@@ -134,7 +134,7 @@
 
         <!-- LOGO -->
         <div class="logo-box">
-            <a href="#logo" class="logo text-center logo-dark">
+            <a href="{{route('admin.index')}}" class="logo text-center logo-dark">
                         <span class="logo-lg">
                             <img src="/themes/adminTpl/assets\images\logo-dark.png" alt="" height="26">
                             <!-- <span class="logo-lg-text-dark">Simple</span> -->
@@ -145,7 +145,7 @@
                         </span>
             </a>
 
-            <a href="#logo" class="logo text-center logo-light">
+            <a href="{{route('admin.index')}}" class="logo text-center logo-light">
                         <span class="logo-lg">
                             <img src="/themes/adminTpl/assets\images\logo-light.png" alt="" height="26">
                             <!-- <span class="logo-lg-text-light">Simple</span> -->

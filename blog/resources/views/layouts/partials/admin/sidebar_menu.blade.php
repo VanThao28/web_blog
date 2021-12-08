@@ -18,7 +18,7 @@
             <li class="menu-title">Navigation</li>
 
             <li>
-                <a href="index.html">
+                <a href="{{route('admin.index')}}">
                     <i class="fas fa-user"></i>
                     <span> User </span>
                 </a>
