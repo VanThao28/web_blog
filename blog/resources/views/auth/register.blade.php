@@ -1,10 +1,9 @@
 <x-guest-layout>
     <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
+
+        <div class="text-center mb-4 mt-3">
+            <span><img src="themes/adminTpl/assets\images\logo-dark.png" alt="" width="150px" height="30"></span>
+        </div>
 
         <!-- Validation Errors -->
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
@@ -13,36 +12,32 @@
             @csrf
 
             <!-- Name -->
-            <div>
-                <x-label for="name" :value="__('Name')" />
-
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
+            <div class="form-group">
+                <label for="username">Name</label>
+                <input class="block mt-1 w-full" type="text" id="name" name="name" required autofocus placeholder="Michael Zenaty">
             </div>
 
             <!-- Email Address -->
             <div class="mt-4">
-                <x-label for="email" :value="__('Email')" />
-
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
+                <div class="form-group">
+                    <label for="username">Email</label>
+                    <input class="block mt-1 w-full" type="email" id="email" name="email" required="" placeholder="test@gmail.com">
+                </div>
             </div>
 
             <!-- Password -->
             <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
-
-                <x-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="new-password" />
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" id="password">
+                </div>
             </div>
-
             <!-- Confirm Password -->
             <div class="mt-4">
-                <x-label for="password_confirmation" :value="__('Confirm Password')" />
-
-                <x-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required />
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input class="block mt-1 w-full" id="password_confirmation" type="password" name="password_confirmation" required>
+                </div>
             </div>
 
             <div class="flex items-center justify-end mt-4">
