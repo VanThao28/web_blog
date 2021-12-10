@@ -187,8 +187,18 @@
     <!-- ============================================================== -->
     <!-- Start Page Content here -->
     <!-- ============================================================== -->
+    <div class="content-page">
+        <div class="content">
 
-    {{ $slot }}
+            <!-- Start container-fluid -->
+            <div class="container-fluid">
+                {{ $slot }}
+            </div>
+
+        </div>
+        <!-- end content -->
+    </div>
+
     <!-- END content-page -->
 
 </div>
@@ -248,7 +258,9 @@
 
 <!-- App js -->
 <script src="/themes/adminTpl/assets\js\app.min.js"></script>
-
+{{--jquery--}}
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
+@yield('script')
 </body>
 
 </html>

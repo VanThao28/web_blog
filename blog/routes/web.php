@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 /* Admin*/
 use App\Http\Controllers\Admin\AdminUsers;
+use App\Http\Controllers\Admin\AdminPost;
 /*end Admin*/
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +19,22 @@ use App\Http\Controllers\Admin\AdminUsers;
 /*Admin*/
 
 Route::name('admin')->prefix('admin')->middleware(['auth'])->group(function (){
+    //show user
     Route::get('/index', [AdminUsers::class, 'index'])->name('.index');
+
+    //create user
+    Route::post('/StoreUser', [AdminUsers::class, 'store'])->name('.StoreUser');
+    Route::get('/CreateUser', [AdminUsers::class, 'create'])->name('.CreateUser');
+
+    //edit user
+    Route::put('/update/{user}', [AdminUsers::class,'update'])->name('.UpdateUser');
+    Route::get('/users/{id}/edit', [AdminUsers::class, 'edit'])->name('.EditUser');
+
+    //delete user
+    Route::delete('delete_user/{id}', [AdminUsers::class, 'destroy'])->name('.DeleteUser');
+
+
+   // Route::resource('post', AdminPost::class);
 });
 
 require __DIR__.'/auth.php';
