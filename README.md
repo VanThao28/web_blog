@@ -15,3 +15,7 @@
 *copy từ thư mục view qua public bằng webpack.mix.js
 (mix.copyDirectory)
 chạy câu lệnh npm install, npm run dev.
+
+* thêm sửa xóa user.
+- sửa dụng controller:
+    + php artisan make:controller AdminUser -r
