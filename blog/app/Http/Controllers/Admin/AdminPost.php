@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use App\Http\Controllers\Admin\AdminUsers;
+use App\Models\Post;
+use App\Models\User;
+
 class AdminPost extends Controller
 {
     /**
@@ -12,9 +16,19 @@ class AdminPost extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    private $modelPost;
+    private $modelUser;
+
+    public function __construct(Post $post, User $user)
+    {
+        $this->modelPost = $post;
+        $this->modelUser = $user;
+    }
+
     public function index()
     {
-        //
+        $posts = $this->modelPost->orderby('id', 'desc')->paginate(config('paginate.show'));
+        return view('admin.post.index',['posts'=>$posts]);
     }
 
     /**
