@@ -17,6 +17,7 @@ class AdminUsers extends Controller
      * @return \Illuminate\Http\Response
      */
     protected $modelUser;
+
     public function __construct(User $user)
     {
         $this->modelUser = $user;
@@ -51,17 +52,26 @@ class AdminUsers extends Controller
         $data = $request->only([
             'name',
             'email',
+            'image_users',
             'password',
         ]);
         //hash::make dùng mã hóa mật khẩu.
         $data['password'] = Hash::make($data['password']);
+        $file = $request->file('image_users');
         // kiểm tra ngoại lệ
+        dd($file);
         try {
+            if ($file) {
+                $file->store('public/users_image/');
+                $data['image_name'] = $file->getClientOriginalName();
+                $data['image_users'] = $file->hashName();
+            }
+
             $users = $this->modelUser->create($data);
             $msg = 'create users success.';
 
             return redirect()
-                ->route('admin.index')
+                ->route('admin.index',['users'=>$users->name])
                 ->with('msg', $msg);
         } catch (\Exception $e) {
             \Log::error($e);
@@ -105,24 +115,29 @@ class AdminUsers extends Controller
      */
     public function update(Request $request, $id)
     {
-
-        $users = $this->modelUser->find($id);
-
+        $users = $this->modelUser->findOrFail($id);
         $data = $request->only([
             'name',
             'email',
+            'image_users',
             'password',
         ]);
-        //hash::make dùng mã hóa mật khẩu.
-        $data['password'] =Hash::make($data['password']);
 
+        //hash::make dùng mã hóa mật khẩu.
+        $file = $request->file('image_users'); // lỗi ko nhận được file image.
+        $data['password'] = Hash::make($data['password']);
         // kiểm tra ngoại lệ
         try {
+            if ($file) {
+                $file->store('public/users_image/');
+                $file->getClientOriginalName();
+                $data['image_name'] = $file->getClientOriginalName();
+                $data['image_users'] = $file->hashName();
+            }
             $users->update($data);
             $msg = 'edit users success.';
-            //dd($users);
             return redirect()
-                ->route('admin.index')
+                ->route('admin.index',['editUsers' => $users->name])
                 ->with('msg', $msg);
         } catch (\Exception $e) {
             \Log::error($e);

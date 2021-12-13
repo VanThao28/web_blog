@@ -3,7 +3,7 @@
         <div class="col-lg-6">
             <div class="mt-5">
                 <h4 class="header-title mb-3">Create User</h4>
-                <form ACTION="{{ route('admin.StoreUser') }}" METHOD="POST">
+                <form ACTION="{{ route('admin.StoreUser') }}" METHOD="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <label for="exampleInputEmail1">Name</label>
@@ -12,6 +12,11 @@
                     <div class="form-group">
                         <label for="exampleInputEmail1">Email address</label>
                         <input type="email" class="form-control" id="email" name="email" required placeholder="Enter email">
+                    </div>
+
+                    <div class="form-group mb-0">
+                        <p>upload</p>
+                        <input type="file" class="filestyle" data-btnclass="btn-primary" id="filestyle-4" name="image_users" tabindex="-1" style="display: none;">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Password</label>

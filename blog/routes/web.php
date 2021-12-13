@@ -33,10 +33,11 @@ Route::name('admin')->prefix('admin')->middleware(['auth'])->group(function (){
     //delete user
     Route::delete('delete_user/{id}', [AdminUsers::class, 'destroy'])->name('.DeleteUser');
 
-
-   // Route::resource('post', AdminPost::class);
+    //end user
+    //
+    //show post
+    Route::get('/post/index', [AdminPost::class, 'index'])->name('.postIndex');
 });
-
 require __DIR__.'/auth.php';
 
 /*clinet*/

@@ -8,6 +8,10 @@
         $('#btn-delete').click(function () {
             $('#form_delete').submit();
         });
+        $(".filestyle").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".file_image_label").addClass("selected").html(fileName);
+        });
 
     });
 </script>

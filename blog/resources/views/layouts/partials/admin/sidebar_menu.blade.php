@@ -2,7 +2,7 @@
 
     <div class="user-box">
         <div class="float-left">
-            <img src="/themes/adminTpl/assets\images\users\avatar-1.jpg" alt="" class="avatar-md rounded-circle">
+            <img src="{{ ShowImageUsers(Auth::user()->image_users) }}" alt="null" class="avatar-md rounded-circle">
         </div>
         <div class="user-info">
             <a href="#">{{Auth::user()->name}}</a>
@@ -18,14 +18,15 @@
             <li class="menu-title">Navigation</li>
 
             <li>
-                <a href="{{route('admin.index')}}">
+                <a href="{{ route('admin.index') }}">
                     <i class="fas fa-user"></i>
                     <span> User </span>
                 </a>
             </li>
 
             <li>
-                <a href="ui-elements.html">
+{{--                <a href="{{ route('admin.postIndex') }}">--}}
+                    <a href="{{ route('admin.postIndex') }}">
                     <i class="fas fa-book"></i>
                     <span> Post </span>
                 </a>
