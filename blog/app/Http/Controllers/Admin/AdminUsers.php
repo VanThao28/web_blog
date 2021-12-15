@@ -59,7 +59,6 @@ class AdminUsers extends Controller
         $data['password'] = Hash::make($data['password']);
         $file = $request->file('image_users');
         // kiểm tra ngoại lệ
-        dd($file);
         try {
             if ($file) {
                 $file->store('public/users_image/');
@@ -171,5 +170,16 @@ class AdminUsers extends Controller
             ->route('admin.index')
             ->with('error', $error);
 
+   }
+   public function search(Request $request) {
+        if($request->isMethod('post'))
+        {
+            $key = $request->input('searchUser');
+            $data = $this->modelUser
+                ->where('name', 'like', '%' .$key.'%')
+                ->orderby('id', 'desc')
+                ->paginate(config('paginate.show'));
+        }
+        return view('admin.users.index', ['users' => $data]);
    }
 }

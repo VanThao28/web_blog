@@ -19,3 +19,15 @@ chạy câu lệnh npm install, npm run dev.
 * thêm sửa xóa user.
 - sửa dụng controller:
     + php artisan make:controller AdminUser -r
+* thêm cột ảnh vào migration
+    - upload ảnh ở form bắt buộc phải thêm enctype="multipart/form"
+    - php artisan make:migration create_table
+    - thêm 1 hàm helpers để sử dụng nhiều lần
+        ->tạo app/helpers.php
+        ->thêm "file":[
+            "app/helpers.php"
+        ]
+        vào file composer.json
+    - tại srorage->app->public->users
+        ->php artisan storage:link
+        ->composer dump-autoload --no-scripts (chạy tất cả danh sách view,route,cache)
