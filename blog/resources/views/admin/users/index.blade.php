@@ -31,7 +31,11 @@
                             <div id="key-table_filter" class="dataTables_filter">
                                 <label>
                                     Search:
-                                    <input type="search" class="form-control form-control-sm" placeholder="" aria-controls="key-table">
+                                    <form action="{{ route('admin.SearchUser') }}" method="POST">
+                                        {{ csrf_field() }}
+                                        <input type="search" name="searchUser" class="form-control form-control-sm" placeholder="search..." aria-controls="key-table">
+                                    </form>
+
                                 </label>
                             </div>
                         </div>
@@ -70,8 +74,8 @@
                                         <td>{{$user->email}}</td>
                                         <td>{{$user->created_at}}</td>
                                         <td>
-                                            <a href="{{ route('admin.EditUser', ['id' => $user->id]) }}" class="btn btn-icon btn-primary"> <i class="fas fa-edit"></i> </a>
-                                            <button class="btn btn-icon btn-danger delete_user"
+                                            <a href="{{ route('admin.EditUser', ['id' => $user->id]) }}" style="margin-bottom: 5px;" class="btn btn-icon btn-primary"> <i class="fas fa-edit"></i> </a>
+                                            <button class="btn btn-icon btn-danger delete_val"
                                                     data-toggle="modal"
                                                     data-target="#modal-delete"
                                                     data-url="{{ route('admin.DeleteUser', ['id'=>$user->id]) }}"> <i class="fas fa-trash-alt"></i>

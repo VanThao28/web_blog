@@ -25,13 +25,16 @@
         <div class="col-12">
             <div class="mt-1">
                 <div id="key-table_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
-                    <a href="#postcreate" class="btn btn-icon btn-success" > <i class="fas fa-plus"></i> </a>
+                    <a href="{{ route('admin.CreatePost') }}" class="btn btn-icon btn-success" > <i class="fas fa-plus"></i> </a>
                     <div class="row">
                         <div class="col-sm-12 col-md-6">
                             <div id="key-table_filter" class="dataTables_filter">
                                 <label>
                                     Search:
-                                    <input type="search" class="form-control form-control-sm" placeholder="" aria-controls="key-table">
+                                    <form action="{{ route('admin.searchPost') }}" method="POST">
+                                        {{ csrf_field() }}
+                                        <input type="search" name="searchPost" class="form-control form-control-sm" placeholder="search..." aria-controls="key-table">
+                                    </form>
                                 </label>
                             </div>
                         </div>
@@ -46,37 +49,65 @@
                                 <thead>
                                 <tr role="row">
                                     <th class="sorting_asc" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 50px;" aria-sort="ascending" aria-label="Name: activate to sort column descending">Id</th>
-                                    <th class="sorting" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 50px; align-items: center" aria-label="Office: activate to sort column ascending">Title</th>
-                                    <th class="sorting" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 256px;" aria-label="Position: activate to sort column ascending">Image Post</th>
-                                    <th class="sorting" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 121px;" aria-label="Office: activate to sort column ascending">User_id</th>
-                                    <th class="sorting" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 121px;" aria-label="Office: activate to sort column ascending">Content</th>
-                                    <th class="sorting" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 121px;" aria-label="Office: activate to sort column ascending">Create Date</th>
+                                    <th class="sorting" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 50px;" aria-label="Position: activate to sort column ascending">Image Post</th>
+                                    <th class="sorting" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 200px; align-items: center" aria-label="Office: activate to sort column ascending">Title</th>
+                                    <th class="sorting" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 50px;" aria-label="Office: activate to sort column ascending">Poster</th>
+                                    <th class="sorting" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 200px;" aria-label="Office: activate to sort column ascending">Content</th>
+                                    <th class="sorting" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 50px;" aria-label="Office: activate to sort column ascending">Create Date</th>
+                                    <th class="sorting" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 50px;" aria-label="Office: activate to sort column ascending">Display</th>
+                                    <th class="sorting" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 50px;" aria-label="Office: activate to sort column ascending">Show Post</th>
                                     <th class="sorting" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 57px;" aria-label="Age: activate to sort column ascending">Setting</th>
                                 </tr>
                                 </thead>
                                 @php
-                                    $id = (($postt->currentPage() - 1) * $postt->perPage()) +1;
+                                    $id = (($posts->currentPage() - 1) * $posts->perPage()) +1;
                                 @endphp
                                 <tbody>
 
-                                @foreach($postt as $post)
+                                @foreach($posts as $post)
 
                                     <tr role="row" class="odd">
                                         <td tabindex="0" class="sorting_1">{{$id}}</td>
                                         @php
                                             $id++;
                                         @endphp
-                                        <td><img src="{{ ShowImageUsers($post->image_post) }}" title="contact-img" class="rounded-circle avatar-sm" alt="null"></td>
-                                        <td>{{$post->title}}</td>
-                                        <td>{{$post->user_id}}</td>
-                                        <td>{{$post->content}}</td>
-                                        <td>{{$post->create_at}}</td>
+                                        <td><img src="{{ ShowImagePost($post->image_post) }}" title="contact-img" class="rounded-circle avatar-sm" alt="{{ $post->name_image_post }}"></td>
                                         <td>
-                                            <a href="#" class="btn btn-icon btn-primary"> <i class="fas fa-edit"></i> </a>
-                                            <button class="btn btn-icon btn-danger delete_user"
+                                            <p class="title">
+                                                <span>{{substr($post->title, 0, 100)}}...</span>
+
+                                            </p>
+                                        </td>
+                                        <td>{{$post->name}}</td>
+                                        <td>
+                                            {{--su dung js de an hien tat ca doan van--}}
+                                            {{--chi thu gon duoc 1 don vi--}}
+                                            <p class="text">
+
+                                                {{--<span id="see_more">{{substr($post->Content, 0, 200)}} ...</span>--}}{{--substr dung de gioi han tu hien thi--}}
+                                                <span id="see_more">{{substr($post->Content, 0, 200)}} ...</span>{{--substr dung de gioi han tu hien thi--}}
+
+                                                {{--<span id="content_full">--}}
+                                                <span id="content_full">
+                                                    {{$post->Content}}
+                                                </span><br>
+                                                <button type="button" id="textButton" onclick="toggleText()" class="btn btn-primary contentText">Show More</button>
+                                                {{--<button type="button" id="text_button" onclick="toggleText()" class="btn btn-primary contentText">Show More</button>--}}
+                                            </p>
+                                        </td>
+                                        <td>{{$post->created_at}}</td>
+                                         @if($post->is_public == 0)
+                                            <td>ẩn</td>
+                                        @else
+                                            <td>Hiển thị</td>
+                                        @endif
+                                        <td style=""><a href="#" class="btn btn-icon btn-primary"> <i class="fas fa-eye"></i> </a></td>
+                                        <td>
+                                            <a href="{{route('admin.EditPost', ['id' => $post->id])}}" class="btn btn-icon btn-primary" style="margin-bottom: 5px;"> <i class="fas fa-edit"></i> </a>
+                                            <button class="btn btn-icon btn-danger delete_val"
                                                     data-toggle="modal"
                                                     data-target="#modal-delete"
-                                                    data-url="#"> <i class="fas fa-trash-alt"></i>
+                                                    data-url="{{ route('admin.DeletePost', ['id' => $post->id]) }}"> <i class="fas fa-trash-alt"></i>
                                             </button>
                                         </td>
                                     </tr>
@@ -89,7 +120,7 @@
                     <div class="row justify-content-md-center">
                         <div class="col-sm-12 col-md-4">
                             <div class="dataTables_paginate paging_simple_numbers" id="key-table_paginate">
-                                {{ $postt->links('layouts.partials.my-pagination') }}
+                                {{ $posts->links('layouts.partials.my-pagination') }}
                             </div>
                         </div>
                     </div>
@@ -100,4 +131,8 @@
     </div>
 
     @include('layouts.partials.admin.form_delete_user')
+
+    @section('script')
+        @include('layouts.partials.admin.js')
+    @endsection
 </x-app-admin>

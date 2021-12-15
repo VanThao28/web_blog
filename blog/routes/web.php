@@ -27,16 +27,33 @@ Route::name('admin')->prefix('admin')->middleware(['auth'])->group(function (){
     Route::get('/CreateUser', [AdminUsers::class, 'create'])->name('.CreateUser');
 
     //edit user
-    Route::put('/update/{user}', [AdminUsers::class,'update'])->name('.UpdateUser');
+    Route::post('/update/{user}', [AdminUsers::class,'update'])->name('.UpdateUser');
     Route::get('/users/{id}/edit', [AdminUsers::class, 'edit'])->name('.EditUser');
 
     //delete user
     Route::delete('delete_user/{id}', [AdminUsers::class, 'destroy'])->name('.DeleteUser');
 
+    //seach user
+    Route::post('/search', [AdminUsers::class, 'search'])->name('.SearchUser');
+
     //end user
     //
     //show post
     Route::get('/post/index', [AdminPost::class, 'index'])->name('.postIndex');
+
+    //create post
+    Route::post('/StorePost', [AdminPost::class, 'store'])->name('.StorePost');
+    Route::get('/CreatePost', [AdminPost::class, 'create'])->name('.CreatePost');
+
+    //edit post
+    Route::post('updatePost/{post}', [AdminPost::class, 'update'])->name('.UpdatePost');
+    Route::get('/post/{id}/edit', [AdminPost::class, 'edit'])->name('.EditPost');
+
+    //delete post
+    Route::delete('delete_post/{id}', [AdminPost::class, 'destroy'])->name('.DeletePost');
+
+    //seach post
+    Route::post('/search_post',[AdminPost::class, 'search'])->name('.searchPost');
 });
 require __DIR__.'/auth.php';
 
