@@ -21,34 +21,5 @@
         URL.revokeObjectURL(output.src) // free memory
          }
     };
-    // //hiển thị content
-    // //
-
-    function toggleText() {
-        // Get all the elements from the page
-        var see_more = document.getElementById("see_more");
-
-        var showMoreText = document.getElementById("content_full");
-
-        var buttonText = document.getElementById("textButton");
-
-        if (see_more.style.display === "none") {
-
-            showMoreText.style.display = "none";
-
-            see_more.style.display = "inline";
-
-            buttonText.innerHTML = "Show More";
-        }
-
-        else {
-
-            showMoreText.style.display = "inline";
-
-            see_more.style.display = "none";
-
-            buttonText.innerHTML = "Show Less";
-        }
-    }
 
 </script>

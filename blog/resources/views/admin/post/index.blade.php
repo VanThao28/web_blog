@@ -75,7 +75,6 @@
                                         <td>
                                             <p class="title">
                                                 <span>{{substr($post->title, 0, 100)}}...</span>
-
                                             </p>
                                         </td>
                                         <td>{{$post->name}}</td>
@@ -83,16 +82,7 @@
                                             {{--su dung js de an hien tat ca doan van--}}
                                             {{--chi thu gon duoc 1 don vi--}}
                                             <p class="text">
-
-                                                {{--<span id="see_more">{{substr($post->Content, 0, 200)}} ...</span>--}}{{--substr dung de gioi han tu hien thi--}}
-                                                <span id="see_more">{{substr($post->Content, 0, 200)}} ...</span>{{--substr dung de gioi han tu hien thi--}}
-
-                                                {{--<span id="content_full">--}}
-                                                <span id="content_full">
-                                                    {{$post->Content}}
-                                                </span><br>
-                                                <button type="button" id="textButton" onclick="toggleText()" class="btn btn-primary contentText">Show More</button>
-                                                {{--<button type="button" id="text_button" onclick="toggleText()" class="btn btn-primary contentText">Show More</button>--}}
+                                                <span>{{substr($post->Content, 0, 200)}} ...</span>{{--substr dung de gioi han tu hien thi--}}
                                             </p>
                                         </td>
                                         <td>{{$post->created_at}}</td>

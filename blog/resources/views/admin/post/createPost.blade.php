@@ -8,15 +8,29 @@
                     <div class="form-group row">
                         <label class="col-md-2 col-form-label" for="example-textarea">Text Title</label>
                         <div class="col-md-10">
-                            <textarea class="form-control" rows="5" id="example-textarea" name="title" required placeholder="Enter Title"></textarea>
+                            <textarea class="form-control" rows="5" id="example-textarea" name="title"  placeholder="Enter Title"></textarea>
+                            @foreach($errors->get('title') as $messaged)
+                                <div class="alert-danger">
+                                    <ul>
+                                        <li>{{  $messaged }}</li>
+                                    </ul>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
 
                     <div class="form-group row  mb-3">
                         <label class="col-md-2 col-form-label">Upload</label>
                         <div class="col-md-10">
-                            <input type="file" accept="image/*" name="image_post" onchange="loadFile(event)" required placeholder="Enter file image">
+                            <input type="file" accept="image/*" name="image_post" onchange="loadFile(event)"  placeholder="Enter file image">
                             <img id="output"/>
+                            @foreach($errors->get('image_post') as $messaged)
+                                <div class="alert-danger">
+                                    <ul>
+                                        <li>{{  $messaged }}</li>
+                                    </ul>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
 
@@ -24,14 +38,28 @@
                     <div class="form-group row">
                         <label class="col-md-2 col-form-label" for=" exampleInputEmail1">Topic</label>
                         <div class="col-md-10">
-                            <input type="text" class="form-control" id="topic" name="topic" required placeholder="Enter topic">
+                            <input type="text" class="form-control" id="topic" name="topic"  placeholder="Enter topic">
+                            @foreach($errors->get('topic') as $messaged)
+                                <div class="alert-danger">
+                                    <ul>
+                                        <li>{{  $messaged }}</li>
+                                    </ul>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label class="col-md-2 col-form-label" for="example-textarea">Text Content</label>
                         <div class="col-md-10">
-                            <textarea class="form-control" rows="5" id="example-textarea" name="Content" required placeholder="Enter Content"></textarea>
+                            <textarea class="form-control" rows="5" id="example-textarea" name="Content"  placeholder="Enter Content"></textarea>
+                            @foreach($errors->get('Content') as $messaged)
+                                <div class="alert-danger">
+                                    <ul>
+                                        <li>{{  $messaged }}</li>
+                                    </ul>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
 
@@ -48,7 +76,13 @@
                             ẩn
                         </label>
                     </div>
-
+                    @foreach($errors->get('is_public') as $messaged)
+                        <div class="alert-danger">
+                            <ul>
+                                <li>{{  $messaged }}</li>
+                            </ul>
+                        </div>
+                    @endforeach
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>
