@@ -9,6 +9,14 @@
                         <label class="col-md-3 col-form-label" for="exampleInputEmail1">Name</label>
                         <div class="col-md-9">
                             <input type="text" class="form-control" id="name" name="name" value="{{ old('name', @$user->name) }}" required placeholder="Enter email">
+                            {{--message validation--}}
+                            @foreach($errors->get('name') as $message)
+                                <div class="alert-danger">
+                                    <ul>
+                                        <li>{{  $message }}</li>
+                                    </ul>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
 
@@ -16,6 +24,14 @@
                         <label class="col-md-3 col-form-label" for="exampleInputEmail1">Email address</label>
                         <div class="col-md-9">
                             <input type="email" class="form-control" id="email" name="email" value="{{ old('email', @$user->email) }}" required placeholder="Enter email">
+                            {{--message validation--}}
+                            @foreach($errors->get('email') as $message)
+                                <div class="alert-danger">
+                                    <ul>
+                                        <li>{{  $message }}</li>
+                                    </ul>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
 
@@ -24,6 +40,14 @@
                         <div class="col-md-9">
                             <input type="file" accept="image/*" name="image_users" onchange="loadFile(event)" value="{{ old('image_users', @$user->image_users) }}">
                             <img id="output"/>
+                            {{--message validation--}}
+                            @foreach($errors->get('image_users') as $message)
+                                <div class="alert-danger">
+                                    <ul>
+                                        <li>{{  $message }}</li>
+                                    </ul>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
 
@@ -31,6 +55,14 @@
                         <label class="col-md-3 col-form-label" for="exampleInputPassword1">Password</label>
                         <div class="col-md-9">
                             <input type="password" class="form-control" id="password" name="password" value="{{ old('password', @$user->password) }}" required autocomplete="current-password" placeholder="Password">
+                            {{--message validation--}}
+                            @foreach($errors->get('password') as $message)
+                                <div class="alert-danger">
+                                    <ul>
+                                        <li>{{  $message }}</li>
+                                    </ul>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
 

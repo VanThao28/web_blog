@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Doctrine\DBAL\Driver\Exception;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules;
+use Validation;
+
 
 use App\Http\Controllers\Admin\AdminUsers;
 use App\Models\Post;
@@ -59,8 +62,15 @@ class AdminPost extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request )
     {
+        $request->validate([
+            'title' => ['required','string', 'max:200'],
+            'image_post' => ['required', 'mimes:jpeg,jpg,png','max:20000'],
+            'topic' => ['required', 'string', 'max:50'],
+            'Content' => ['required','max:100000'],
+            'is_public' => 'required',
+        ]);
         $data = $request->only([
             'title',
             'image_post',
@@ -70,7 +80,7 @@ class AdminPost extends Controller
             'Content',
             'is_public',
         ]);
-
+    dd($data);
         $data['is_public'] = isset($data['is_public']) ? (int) $data['is_public'] : 0;
         $data['user_id'] = auth()->id();
         $file = $request->file('image_post');
@@ -138,6 +148,13 @@ class AdminPost extends Controller
 
         $posts = $this->modelPost->findOrFail($id);
 
+        $request->validate([
+            'title' => ['required','string', 'max:200'],
+            'image_post' => ['mimes:jpeg,jpg,png','max:20000'],
+            'topic' => ['required', 'string', 'max:50'],
+            'Content' => ['required','max:100000'],
+            'is_public' => 'required',
+        ]);
         $data = $request->only([
             'title',
             'image_post',
@@ -147,7 +164,6 @@ class AdminPost extends Controller
             'Content',
             'is_public',
         ]);
-
         $data['is_public'] = isset($data['is_public']) ? (int) $data['is_public'] : 0;
         $data['user_id'] = (int)$data['user_id'];
         $file = $request->file('image_post');

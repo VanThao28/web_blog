@@ -10,17 +10,5 @@
 <link href="/themes/adminTpl/assets\css\bootstrap.min.css" rel="stylesheet" type="text/css" id="bootstrap-stylesheet">
 <link href="/themes/adminTpl/assets\css\icons.min.css" rel="stylesheet" type="text/css">
 <link href="/themes/adminTpl/assets\css\app.min.css" rel="stylesheet" type="text/css" id="app-stylesheet">
-<style>
-    #content_full {
-        display: none;
-    }
-    .text.show-more #content_full {
-        display: inline;
-    }
-    .text.show-more #see_more {
-        display: none;
-    }
-
-</style>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>

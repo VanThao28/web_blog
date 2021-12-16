@@ -9,6 +9,13 @@
                         <label class="col-md-2 col-form-label" for="example-textarea">Text Title</label>
                         <div class="col-md-10">
                             <textarea class="form-control" rows="5" id="example-textarea" name="title" required >{{old('title', @$post->title)}}</textarea>
+                            @foreach($errors->get('title') as $messaged)
+                                <div class="alert-danger">
+                                    <ul>
+                                        <li>{{  $messaged }}</li>
+                                    </ul>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
 
@@ -17,6 +24,13 @@
                         <div class="col-md-10">
                             <input type="file" accept="image/*" name="image_post" onchange="loadFile(event)" placeholder="{{old('image_post', @$post->image_post)}}">
                             <img id="output"/>
+                            @foreach($errors->get('image_post') as $messaged)
+                                <div class="alert-danger">
+                                    <ul>
+                                        <li>{{  $messaged }}</li>
+                                    </ul>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
 
@@ -36,6 +50,13 @@
                         <label class="col-md-2 col-form-label" for=" exampleInputEmail1">Topic</label>
                         <div class="col-md-10">
                             <input type="text" class="form-control" id="topic" name="topic" required value="{{old('topic', @$post->topic)}}">
+                            @foreach($errors->get('topic') as $messaged)
+                                <div class="alert-danger">
+                                    <ul>
+                                        <li>{{  $messaged }}</li>
+                                    </ul>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
 
@@ -43,6 +64,13 @@
                         <label class="col-md-2 col-form-label" for="example-textarea">Text Content</label>
                         <div class="col-md-10">
                             <textarea class="form-control" rows="5" id="example-textarea" name="Content" required >{{old('Content', @$post->Content)}}</textarea>
+                            @foreach($errors->get('Content') as $messaged)
+                                <div class="alert-danger">
+                                    <ul>
+                                        <li>{{  $messaged }}</li>
+                                    </ul>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
 
@@ -68,6 +96,13 @@
                                 </label>
 
                         </div>
+                    @foreach($errors->get('is_public') as $messaged)
+                        <div class="alert-danger">
+                            <ul>
+                                <li>{{  $messaged }}</li>
+                            </ul>
+                        </div>
+                    @endforeach
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>

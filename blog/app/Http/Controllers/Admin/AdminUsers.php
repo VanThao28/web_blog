@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
+use Validation;
+
 
 use App\Models\User;
 use Mockery\Exception;
@@ -49,6 +52,12 @@ class AdminUsers extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'image_users' =>['required','mimes:jpeg,jpg,png','max:20000'],
+            'password' => ['required', Rules\Password::defaults()],
+        ]);
         $data = $request->only([
             'name',
             'email',
@@ -115,6 +124,12 @@ class AdminUsers extends Controller
     public function update(Request $request, $id)
     {
         $users = $this->modelUser->findOrFail($id);
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'image_users' =>['required','mimes:jpeg,jpg,png','max:20000'],
+            'password' => ['required', Rules\Password::defaults()],
+        ]);
         $data = $request->only([
             'name',
             'email',
