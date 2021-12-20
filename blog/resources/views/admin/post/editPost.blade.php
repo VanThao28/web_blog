@@ -38,7 +38,7 @@
                         <label class="col-md-2 col-form-label">Poster</label>
                        <div class="col-md-10">
                            <select class="custom-select" name="user_id">
-                               <option selected="" value="{{ old('user_id', @$post->user_id) }}">{{ old('name', @$post->name) }}</option>
+                               <option selected="" value="{{ old('user_id', @$post->user_id) }}">{{ old('name', @$name_post->name) }}</option>
                                @foreach($users as $user)
                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
                                @endforeach

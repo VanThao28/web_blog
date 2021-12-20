@@ -8,7 +8,7 @@
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label" for="exampleInputEmail1">Name</label>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" id="name" name="name" value="{{ old('name', @$user->name) }}" required placeholder="Enter email">
+                            <input type="text" class="form-control" id="name" name="name" value="{{ old('name', @$user->name) }}" required placeholder="Enter name">
                             {{--message validation--}}
                             @foreach($errors->get('name') as $message)
                                 <div class="alert-danger">
