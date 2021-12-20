@@ -55,13 +55,7 @@
                                     <li><a href="{{ route('clinet.categori') }}">Category</a></li>
                                     <li><a href="{{ route('about') }}">About</a></li>
                                     <li><a href="{{route('clinet.contact')}}">Contact</a></li>
-                                    <li><a href="#">Pages</a>
-                                        <ul class="submenu">
-                                            <li><a href="{{route('clinet.blog')}}">Blog</a></li>
-                                            <li><a href="{{route('clinet.single_blog')}}">Blog Details</a></li>
-                                            <li><a href="{{route('clinet.detail')}}">Categori Details</a></li>
-                                        </ul>
-                                    </li>
+                                    <li><a href="{{route('clinet.blog')}}">Blog</a></li>
                                 </ul>
                             </nav>
                         </div>

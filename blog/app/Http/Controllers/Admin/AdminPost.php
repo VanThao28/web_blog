@@ -32,9 +32,7 @@ class AdminPost extends Controller
 
     public function index()
     {
-        $posts = $this->modelPost
-            ->join('users', 'posts.user_id', '=', 'users.id') // form posts inter join users on posts.user_id = users.id
-            ->select('posts.*', 'users.name')// select posts.*, users.name
+        $posts = $this->modelPost::with('user:id,name')
             ->orderby('id', 'desc')
             ->paginate(config('paginate.show'));
         return view('admin.post.index',[
@@ -80,7 +78,6 @@ class AdminPost extends Controller
             'Content',
             'is_public',
         ]);
-    dd($data);
         $data['is_public'] = isset($data['is_public']) ? (int) $data['is_public'] : 0;
         $data['user_id'] = auth()->id();
         $file = $request->file('image_post');
@@ -95,7 +92,7 @@ class AdminPost extends Controller
             $posts = $this->modelPost->create($data);
             $msg = 'create post success';
             return redirect()
-                    ->route('admin.postIndex', ['posts' => $posts->name])
+                    ->route('admin.postIndex', ['posts' => $posts->id])
                     ->with('msg', $msg);
         } catch (\Exception $e) {
             \Log::error($e);
@@ -114,7 +111,8 @@ class AdminPost extends Controller
      */
     public function show($id)
     {
-        //
+//        $posts = $this->modelPost->findOrFail($id);
+//        return view('clinet.details',['post'=> $posts]);
     }
 
     /**
@@ -126,13 +124,14 @@ class AdminPost extends Controller
     public function edit($id)
     {
         $users = $this->modelUser->get();
-        $posts = $this->modelPost
-            ->join('users', 'posts.user_id', '=', 'users.id')
-            ->select('posts.*', 'users.name')
-            ->findOrFail($id);
+
+        $posts = $this->modelPost->findOrFail($id);
+
+        $name_post = $posts->user()->first();
         return view('admin.post.editPost',[
             'post' =>$posts,
             'users' =>$users,
+            'name_post' => $name_post,
         ]);
     }
 
@@ -218,8 +217,8 @@ class AdminPost extends Controller
            $data = $this->modelPost
                ->where('title', 'like', '%'. $key . '%')
                ->orwhere('name', 'like', '%'. $key . '%')
-               ->join('users', 'posts.user_id' , '=', 'users.id')
-               ->select('users.name', 'posts.*')
+               ->join('users', 'posts.user_id', '=', 'users.id')
+               ->select('posts.*', 'users.name')
                ->paginate(config('paginate.show'));
        }
        return view('admin.post.index', ['posts' => $data]);

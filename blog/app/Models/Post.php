@@ -18,4 +18,7 @@ class Post extends Model
         'Content',
         'is_public',
     ];
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
 }

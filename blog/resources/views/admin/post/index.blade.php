@@ -74,13 +74,11 @@
                                         <td><img src="{{ ShowImagePost($post->image_post) }}" title="contact-img" class="rounded-circle avatar-sm" alt="{{ $post->name_image_post }}"></td>
                                         <td>
                                             <p class="title">
-                                                <span>{{substr($post->title, 0, 100)}}...</span>
+                                                    <span>{{ $post->title }}</span>
                                             </p>
                                         </td>
-                                        <td>{{$post->name}}</td>
+                                        <td>{{$post->user->name}}</td>
                                         <td>
-                                            {{--su dung js de an hien tat ca doan van--}}
-                                            {{--chi thu gon duoc 1 don vi--}}
                                             <p class="text">
                                                 <span>{{substr($post->Content, 0, 200)}} ...</span>{{--substr dung de gioi han tu hien thi--}}
                                             </p>
@@ -91,7 +89,7 @@
                                         @else
                                             <td>Hiển thị</td>
                                         @endif
-                                        <td style=""><a href="#" class="btn btn-icon btn-primary"> <i class="fas fa-eye"></i> </a></td>
+                                        <td style=""><a href="{{ route('clinet.detail',['id' => $post->id]) }}" class="btn btn-icon btn-primary"> <i class="fas fa-eye"></i> </a></td>
                                         <td>
                                             <a href="{{route('admin.EditPost', ['id' => $post->id])}}" class="btn btn-icon btn-primary" style="margin-bottom: 5px;"> <i class="fas fa-edit"></i> </a>
                                             <button class="btn btn-icon btn-danger delete_val"

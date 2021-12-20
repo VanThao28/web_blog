@@ -125,10 +125,10 @@ class AdminUsers extends Controller
     {
         $users = $this->modelUser->findOrFail($id);
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'image_users' =>['required','mimes:jpeg,jpg,png','max:20000'],
-            'password' => ['required', Rules\Password::defaults()],
+            'name' => ['string', 'max:255'],
+            'email' => [ 'string', 'email', 'max:255'],
+            'image_users' =>['mimes:jpeg,jpg,png','max:20000'],
+            'password' => [Rules\Password::defaults()],
         ]);
         $data = $request->only([
             'name',

@@ -6,26 +6,17 @@
                 <div class="col-lg-8 posts-list">
                     <div class="single-post">
                         <div class="feature-img">
-                            <img class="img-fluid" src="/themes/aznews/assets/img/blog/single_blog_1.png" alt="">
+                            <img class="img-fluid" src="{{ ShowImagePost($blog_detail->image_post) }}" alt="">
                         </div>
                         <div class="blog_details">
-                            <h2>Second divided from form fish beast made every of seas
-                                all gathered us saying he our
+                            <h2>{{ $blog_detail->title }}
                             </h2>
                             <ul class="blog-info-link mt-3 mb-4">
-                                <li><a href="#"><i class="fa fa-user"></i> Travel, Lifestyle</a></li>
+                                <li><a href="#"><i class="fa fa-user"></i>{{ $blog_detail->user->name }}</a></li>
                                 <li><a href="#"><i class="fa fa-comments"></i> 03 Comments</a></li>
                             </ul>
                             <p class="excert">
-                                MCSE boot camps have its supporters and its detractors. Some people do not understand why you
-                                should have to spend money on boot camp when you can get the MCSE study materials yourself at a
-                                fraction of the camp price. However, who has the willpower
-                            </p>
-                            <p>
-                                MCSE boot camps have its supporters and its detractors. Some people do not understand why you
-                                should have to spend money on boot camp when you can get the MCSE study materials yourself at a
-                                fraction of the camp price. However, who has the willpower to actually sit through a
-                                self-imposed MCSE training. who has the willpower to actually
+                                {{ $blog_detail->Content }}
                             </p>
                             <div class="quote-wrapper">
                                 <div class="quotes">
@@ -35,17 +26,6 @@
                                     self-imposed MCSE training.
                                 </div>
                             </div>
-                            <p>
-                                MCSE boot camps have its supporters and its detractors. Some people do not understand why you
-                                should have to spend money on boot camp when you can get the MCSE study materials yourself at a
-                                fraction of the camp price. However, who has the willpower
-                            </p>
-                            <p>
-                                MCSE boot camps have its supporters and its detractors. Some people do not understand why you
-                                should have to spend money on boot camp when you can get the MCSE study materials yourself at a
-                                fraction of the camp price. However, who has the willpower to actually sit through a
-                                self-imposed MCSE training. who has the willpower to actually
-                            </p>
                         </div>
                     </div>
                     <div class="navigation-top">
@@ -293,7 +273,7 @@
                             <div class="media post_item">
                                 <img src="/themes/aznews/assets/img/post/post_1.png" alt="post">
                                 <div class="media-body">
-                                    <a href="{{route('clinet.single_blog')}}">
+                                    <a href="#">
                                         <h3>From life was you fish...</h3>
                                     </a>
                                     <p>January 12, 2019</p>
@@ -302,7 +282,7 @@
                             <div class="media post_item">
                                 <img src="/themes/aznews/assets/img/post/post_2.png" alt="post">
                                 <div class="media-body">
-                                    <a href="{{route('clinet.single_blog')}}">
+                                    <a href="#">
                                         <h3>The Amazing Hubble</h3>
                                     </a>
                                     <p>02 Hours ago</p>
@@ -311,7 +291,7 @@
                             <div class="media post_item">
                                 <img src="/themes/aznews/assets/img/post/post_3.png" alt="post">
                                 <div class="media-body">
-                                    <a href="{{route('clinet.single_blog')}}">
+                                    <a href="#">
                                         <h3>Astronomy Or Astrology</h3>
                                     </a>
                                     <p>03 Hours ago</p>
@@ -320,7 +300,7 @@
                             <div class="media post_item">
                                 <img src="/themes/aznews/assets/img/post/post_4.png" alt="post">
                                 <div class="media-body">
-                                    <a href="{{route('clinet.single_blog')}}">
+                                    <a href="#">
                                         <h3>Asteroids telescope</h3>
                                     </a>
                                     <p>01 Hours ago</p>
