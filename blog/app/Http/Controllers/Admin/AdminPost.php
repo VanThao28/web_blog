@@ -32,11 +32,14 @@ class AdminPost extends Controller
 
     public function index()
     {
+        $users = $this->modelUser->get();
+
         $posts = $this->modelPost::with('user:id,name')
             ->orderby('id', 'desc')
             ->paginate(config('paginate.show'));
         return view('admin.post.index',[
             'posts'=>$posts,
+            'users'=>$users,
         ]);
     }
 
@@ -50,6 +53,7 @@ class AdminPost extends Controller
         $users = $this->modelUser
                 ->pluck('name', 'id') //pluck dung de nhom ban ghi thanh nhom nho
                 ->toArray(); //chuyen objcet sang mang hoac kieu du lieu json
+
 
         return view('admin.post.createPost', ['users'=>$users]);
     }
@@ -69,7 +73,8 @@ class AdminPost extends Controller
             'Content' => ['required','max:100000'],
             'is_public' => 'required',
         ]);
-        $data = $request->only([
+
+        $input = $request->only([
             'title',
             'image_post',
             'name_image_post',
@@ -78,6 +83,14 @@ class AdminPost extends Controller
             'Content',
             'is_public',
         ]);
+
+        $data = [
+            'title' => $input['title'],
+            'formData' => $input['image_post'],
+            'topic' => $input['topic'],
+            'Content' => $input['Content'],
+            'is_public' => $input['is_public'],
+        ];
         $data['is_public'] = isset($data['is_public']) ? (int) $data['is_public'] : 0;
         $data['user_id'] = auth()->id();
         $file = $request->file('image_post');
@@ -88,19 +101,14 @@ class AdminPost extends Controller
                 $data['name_image_post'] = $file->getClientOriginalName();
                 $data['image_post'] = $file->hashName();
             }
+            $this->modelPost->create($data);
 
-            $posts = $this->modelPost->create($data);
-            $msg = 'create post success';
-            return redirect()
-                    ->route('admin.postIndex', ['posts' => $posts->id])
-                    ->with('msg', $msg);
         } catch (\Exception $e) {
             \Log::error($e);
             $error = 'create post error';
-            return redirect()
-                    ->route('admin.postIndex')
-                    ->with('error',$error);
+
          }
+        return response()->json('success post');
     }
 
     /**
@@ -128,7 +136,7 @@ class AdminPost extends Controller
         $posts = $this->modelPost->findOrFail($id);
 
         $name_post = $posts->user()->first();
-        return view('admin.post.editPost',[
+        return view('admin.post.edit_post',[
             'post' =>$posts,
             'users' =>$users,
             'name_post' => $name_post,
@@ -144,7 +152,7 @@ class AdminPost extends Controller
      */
     public function update(Request $request, $id)
     {
-
+        dd('ok');
         $posts = $this->modelPost->findOrFail($id);
 
         $request->validate([

@@ -49,7 +49,6 @@ Route::name('admin')->prefix('admin')->middleware(['auth'])->group(function (){
 
         //create post
         Route::post('/StorePost', [AdminPost::class, 'store'])->name('.StorePost');
-        Route::get('/CreatePost', [AdminPost::class, 'create'])->name('.CreatePost');
 
         //show post
         //Route::get('/ShowPost/{id}', [AdminPost::class, 'show'])->name('.ShowPost');
@@ -57,6 +56,7 @@ Route::name('admin')->prefix('admin')->middleware(['auth'])->group(function (){
         //edit post
         Route::post('updatePost/{post}', [AdminPost::class, 'update'])->name('.UpdatePost');
         Route::get('/post/{id}/edit', [AdminPost::class, 'edit'])->name('.EditPost');
+//        Route::post('/postSession',[AdminPost::class, 'postSession'])->name('.SavePost');
 
         //delete post
         Route::delete('delete_post/{id}', [AdminPost::class, 'destroy'])->name('.DeletePost');
@@ -76,6 +76,7 @@ require __DIR__.'/auth.php';
 
     Route::get('clinet/single_blog/{id}', [BlogClinet::class, 'blogDetail'])->name('clinet.single_blog');
 /*end clinet*/
+
 Route::get('/About', function () {
    return view('clinet.about');
 })->name('about');

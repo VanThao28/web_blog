@@ -106,8 +106,6 @@
                 </div>
             </li>
 
-
-
             <li class="dropdown notification-list">
                 <a class="nav-link dropdown-toggle nav-user mr-0" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                     <img src="{{ ShowImageUsers(Auth::user()->image_users) }}" alt="null" class="rounded-circle">
@@ -135,25 +133,25 @@
         <!-- LOGO -->
         <div class="logo-box">
             <a href="{{route('admin.index')}}" class="logo text-center logo-dark">
-                        <span class="logo-lg">
-                            <img src="/themes/adminTpl/assets\images\logo-dark.png" alt="" height="26">
-                            <!-- <span class="logo-lg-text-dark">Simple</span> -->
-                        </span>
-                <span class="logo-sm">
-                            <!-- <span class="logo-lg-text-dark">S</span> -->
-                            <img src="/themes/adminTpl/assets\images\logo-sm.png" alt="" height="22">
-                        </span>
+                    <span class="logo-lg">
+                        <img src="/themes/adminTpl/assets\images\logo-dark.png" alt="" height="26">
+                        <!-- <span class="logo-lg-text-dark">Simple</span> -->
+                    </span>
+                    <span class="logo-sm">
+                        <!-- <span class="logo-lg-text-dark">S</span> -->
+                        <img src="/themes/adminTpl/assets\images\logo-sm.png" alt="" height="22">
+                    </span>
             </a>
 
             <a href="{{route('admin.index')}}" class="logo text-center logo-light">
-                        <span class="logo-lg">
-                            <img src="/themes/adminTpl/assets\images\logo-light.png" alt="" height="26">
-                            <!-- <span class="logo-lg-text-light">Simple</span> -->
-                        </span>
-                <span class="logo-sm">
-                            <!-- <span class="logo-lg-text-light">S</span> -->
-                            <img src="/themes/adminTpl/assets\images\logo-sm.png" alt="" height="22">
-                        </span>
+                    <span class="logo-lg">
+                        <img src="/themes/adminTpl/assets\images\logo-light.png" alt="" height="26">
+                        <!-- <span class="logo-lg-text-light">Simple</span> -->
+                    </span>
+                    <span class="logo-sm">
+                        <!-- <span class="logo-lg-text-light">S</span> -->
+                        <img src="/themes/adminTpl/assets\images\logo-sm.png" alt="" height="22">
+                    </span>
             </a>
         </div>
 
@@ -208,7 +206,6 @@
 
 <!-- Vendor js -->
 <script src="/themes/adminTpl/assets\js\vendor.min.js"></script>
-
 <script src="/themes/adminTpl/assets\libs\morris-js\morris.min.js"></script>
 <script src="/themes/adminTpl/assets\libs\raphael\raphael.min.js"></script>
 
@@ -217,7 +214,7 @@
 <!-- App js -->
 <script src="/themes/adminTpl/assets\js\app.min.js"></script>
 {{--jquery--}}
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <!-- Vendor js -->
 <script src="/themes/adminTpl/assets\libs\moment\moment.min.js"></script>
 <script src="/themes/adminTpl/assets\libs\bootstrap-tagsinput\bootstrap-tagsinput.min.js"></script>
@@ -237,6 +234,11 @@
 
 <!-- Init js-->
 <script src="/themes/adminTpl/assets\js\pages\form-advanced.init.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+
 
 @yield('script')
 </body>
