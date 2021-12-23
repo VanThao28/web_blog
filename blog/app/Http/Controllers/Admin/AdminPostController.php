@@ -9,12 +9,12 @@ use Illuminate\Validation\Rules;
 use Validation;
 
 
-use App\Http\Controllers\Admin\AdminUsers;
+use App\Http\Controllers\Admin\AdminUsersControler;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
-class AdminPost extends Controller
+class AdminPostController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -112,35 +112,14 @@ class AdminPost extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-//        $posts = $this->modelPost->findOrFail($id);
-//        return view('clinet.details',['post'=> $posts]);
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request,$id)
     {
-        $users = $this->modelUser->get();
-
-        $posts = $this->modelPost->findOrFail($id);
-
-        $name_post = $posts->user()->first();
-        return view('admin.post.edit_post',[
-            'post' =>$posts,
-            'users' =>$users,
-            'name_post' => $name_post,
-        ]);
+        //
     }
 
     /**
@@ -152,47 +131,7 @@ class AdminPost extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd('ok');
-        $posts = $this->modelPost->findOrFail($id);
-
-        $request->validate([
-            'title' => ['required','string', 'max:200'],
-            'image_post' => ['mimes:jpeg,jpg,png','max:20000'],
-            'topic' => ['required', 'string', 'max:50'],
-            'Content' => ['required','max:100000'],
-            'is_public' => 'required',
-        ]);
-        $data = $request->only([
-            'title',
-            'image_post',
-            'name_image_post',
-            'topic',
-            'user_id',
-            'Content',
-            'is_public',
-        ]);
-        $data['is_public'] = isset($data['is_public']) ? (int) $data['is_public'] : 0;
-        $data['user_id'] = (int)$data['user_id'];
-        $file = $request->file('image_post');
-        try {
-            if ($file) {
-                $file->store('public/post_image/');
-                $file->getClientOriginalName();
-                $data['name_image_post'] = $file->getClientOriginalName();
-                $data['image_post'] = $file->hashName();
-            }
-            $posts->update($data);
-            $msg = 'update post seccess';
-            return redirect()
-                ->route('admin.postIndex')
-                ->with('msg', $msg);
-        } catch (\Exception $e) {
-            \Log::error($e);
-            $error = 'update post error';
-            return redirect()
-                ->route('admin.postIndex')
-                ->with('error', $error);
-        }
+        //
     }
 
     /**
@@ -230,5 +169,15 @@ class AdminPost extends Controller
                ->paginate(config('paginate.show'));
        }
        return view('admin.post.index', ['posts' => $data]);
+    }
+    public function postSession(Request $request) {
+        $postId =(int) $request->post_id;
+        $data = [
+            'btn_edit_post' => [
+                'id' => $postId
+            ],
+        ];
+        session($data);
+        return json_encode($data);
     }
 }

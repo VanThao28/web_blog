@@ -19,26 +19,24 @@
             $(this).siblings(".file_image_label").addClass("selected").html(fileName);
         });
     });
-    {{--$(document).ready(function () {--}}
-    {{--    $('.btn_edit_post').button(function (e) {--}}
-    {{--        var form_edit = $('#form_post_edit')[0];--}}
-    {{--        var form_data_edit = new FormData(form_edit);--}}
-    {{--        var post_id = $(this).data(postId);--}}
-    {{--        var url = "{{ route("admin.SavePost") }}";--}}
-    {{--        console.log(url,post_id);--}}
-    {{--        $.ajax({--}}
-    {{--            url: url,--}}
-    {{--            post_id: post_id,--}}
-    {{--            type: 'POST',--}}
-    {{--            data: form_data_edit,--}}
-    {{--            contentType: false,--}}
-    {{--            processData: false,--}}
-    {{--            success: function (data){--}}
-    {{--                console.log('success');--}}
-    {{--            }--}}
-    {{--        });--}}
-    {{--    });--}}
-    {{--});--}}
+    $(document).ready(function () {
+        $('.btn_edit_post').click(function (e) {
+            var post_id = $(this).data('postid');
+            var image_post = $(this).parent().parent().parent().find('.image_post').val();
+            var title_post = $(this).parent().parent().find('.title_post').val();
+            console.log(post_id,title_post,image_post);
+            $.ajax({
+                method: 'POST',
+                url: '{{ route("admin.SavePost")}}',
+                data: {
+                    post_id:post_id,
+                },
+                success: function (data){
+                    console.log('success session post');
+                }
+            });
+        });
+    });
     //upload anh
         var loadFile = function(event) {
         var output = document.getElementById('output');
