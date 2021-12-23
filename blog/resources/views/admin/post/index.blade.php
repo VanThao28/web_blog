@@ -49,17 +49,17 @@
                             <table id="key-table" class="table table-bordered dt-responsive nowrap dataTable no-footer dtr-inline" style="border-collapse: collapse; border-spacing: 0px; width: 100%; position: relative;" role="grid" aria-describedby="key-table_info">
 
                                 <thead>
-                                <tr role="row">
-                                    <th class="sorting_asc" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 50px;" aria-sort="ascending" aria-label="Name: activate to sort column descending">Id</th>
-                                    <th class="sorting" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 50px;" aria-label="Position: activate to sort column ascending">Image Post</th>
-                                    <th class="sorting" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 200px; align-items: center" aria-label="Office: activate to sort column ascending">Title</th>
-                                    <th class="sorting" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 50px;" aria-label="Office: activate to sort column ascending">Poster</th>
-                                    <th class="sorting" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 200px;" aria-label="Office: activate to sort column ascending">Content</th>
-                                    <th class="sorting" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 50px;" aria-label="Office: activate to sort column ascending">Create Date</th>
-                                    <th class="sorting" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 50px;" aria-label="Office: activate to sort column ascending">Display</th>
-                                    <th class="sorting" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 50px;" aria-label="Office: activate to sort column ascending">Show Post</th>
-                                    <th class="sorting" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 57px;" aria-label="Age: activate to sort column ascending">Setting</th>
-                                </tr>
+                                    <tr role="row">
+                                        <th class="sorting_asc" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 50px;" aria-sort="ascending" aria-label="Name: activate to sort column descending">Id</th>
+                                        <th class="sorting" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 50px;" aria-label="Position: activate to sort column ascending">Image Post</th>
+                                        <th class="sorting" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 200px; align-items: center" aria-label="Office: activate to sort column ascending">Title</th>
+                                        <th class="sorting" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 50px;" aria-label="Office: activate to sort column ascending">Poster</th>
+                                        <th class="sorting" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 200px;" aria-label="Office: activate to sort column ascending">Content</th>
+                                        <th class="sorting" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 50px;" aria-label="Office: activate to sort column ascending">Create Date</th>
+                                        <th class="sorting" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 50px;" aria-label="Office: activate to sort column ascending">Display</th>
+                                        <th class="sorting" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 50px;" aria-label="Office: activate to sort column ascending">Show Post</th>
+                                        <th class="sorting" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 57px;" aria-label="Age: activate to sort column ascending">Setting</th>
+                                    </tr>
                                 </thead>
                                 @php
                                     $id = (($posts->currentPage() - 1) * $posts->perPage()) +1;
@@ -73,32 +73,34 @@
                                         @php
                                             $id++;
                                         @endphp
-                                        <td><img src="{{ ShowImagePost($post->image_post) }}" title="contact-img" class="rounded-circle avatar-sm" alt="{{ $post->name_image_post }}"></td>
+                                        <td>
+                                            <img src="{{ ShowImagePost($post->image_post) }}" title="contact-img" class="rounded-circle avatar-sm image_post" alt="{{ $post->name_image_post }}">
+                                        </td>
                                         <td>
                                             <p class="title">
-                                                    <span>{{ $post->title }}</span>
+                                                    <span class="title_post">{{ $post->title }}</span>
                                             </p>
                                         </td>
-                                        <td>{{$post->user->name}}</td>
+                                        <td class="user_name">{{$post->user->name}}</td>
                                         <td>
                                             <p class="text">
-                                                <span>{{substr($post->Content, 0, 200)}} ... </span>{{--substr dung de gioi han tu hien thi--}}
+                                                <span class="content">{{substr($post->Content, 0, 200)}} ... </span>{{--substr dung de gioi han tu hien thi--}}
                                             </p>
                                         </td>
-                                        <td>{{$post->created_at}}</td>
+                                        <td class="create_at">{{$post->created_at}}</td>
                                          @if($post->is_public == 0)
-                                            <td>ẩn</td>
+                                            <td class="is_public">ẩn</td>
                                         @else
-                                            <td>Hiển thị</td>
+                                            <td class="is_public">Hiển thị</td>
                                         @endif
                                         <td style=""><a href="{{ route('clinet.detail',['id' => $post->id]) }}" class="btn btn-icon btn-primary"> <i class="fas fa-eye"></i> </a></td>
                                         <td>
-{{--                                            <button type="button" class="btn btn-primary btn_edit_post" style="margin-bottom: 5px;"--}}
-{{--                                                    data-postId="{{ $post->id }}"--}}
-{{--                                                    data-toggle="modal"--}}
-{{--                                                    data-target="#modal_edit_post"--}}
-{{--                                                    ><i class="fas fa-edit"></i>--}}
-{{--                                            </button>--}}
+                                            <button type="button" class="btn btn-primary btn_edit_post" style="margin-bottom: 5px;"
+                                                    data-postid="{{ $post->id }}"
+                                                    data-toggle="modal"
+                                                    data-target="#modal_edit_post"
+                                                    ><i class="fas fa-edit"></i>
+                                            </button>
 
                                             <button class="btn btn-icon btn-danger delete_val"
                                                     data-toggle="modal"
@@ -125,11 +127,11 @@
             </div>
         </div>
     </div>
-                {{--    create post--}}
+                {{--create post--}}
     @include('layouts.partials.admin.modal_create_form')
-{{--                --}}{{--    edit post--}}
-{{--    @include('layouts.partials.admin.modal_edit_form')--}}
-                {{--    delete post--}}
+                {{--edit post--}}
+    @include('layouts.partials.admin.modal_edit_form')
+                {{--delete post--}}
     @include('layouts.partials.admin.form_delete_user')
 
     @section('script')
