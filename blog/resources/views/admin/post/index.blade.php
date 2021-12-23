@@ -25,7 +25,9 @@
         <div class="col-12">
             <div class="mt-1">
                 <div id="key-table_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
-                    <a href="{{ route('admin.CreatePost') }}" class="btn btn-icon btn-success" > <i class="fas fa-plus"></i> </a>
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal_create_post">
+                        <i class="fas fa-plus"></i>
+                    </button>
                     <div class="row">
                         <div class="col-sm-12 col-md-6">
                             <div id="key-table_filter" class="dataTables_filter">
@@ -80,7 +82,7 @@
                                         <td>{{$post->user->name}}</td>
                                         <td>
                                             <p class="text">
-                                                <span>{{substr($post->Content, 0, 200)}} ...</span>{{--substr dung de gioi han tu hien thi--}}
+                                                <span>{{substr($post->Content, 0, 200)}} ... </span>{{--substr dung de gioi han tu hien thi--}}
                                             </p>
                                         </td>
                                         <td>{{$post->created_at}}</td>
@@ -91,7 +93,13 @@
                                         @endif
                                         <td style=""><a href="{{ route('clinet.detail',['id' => $post->id]) }}" class="btn btn-icon btn-primary"> <i class="fas fa-eye"></i> </a></td>
                                         <td>
-                                            <a href="{{route('admin.EditPost', ['id' => $post->id])}}" class="btn btn-icon btn-primary" style="margin-bottom: 5px;"> <i class="fas fa-edit"></i> </a>
+{{--                                            <button type="button" class="btn btn-primary btn_edit_post" style="margin-bottom: 5px;"--}}
+{{--                                                    data-postId="{{ $post->id }}"--}}
+{{--                                                    data-toggle="modal"--}}
+{{--                                                    data-target="#modal_edit_post"--}}
+{{--                                                    ><i class="fas fa-edit"></i>--}}
+{{--                                            </button>--}}
+
                                             <button class="btn btn-icon btn-danger delete_val"
                                                     data-toggle="modal"
                                                     data-target="#modal-delete"
@@ -117,7 +125,11 @@
             </div>
         </div>
     </div>
-
+                {{--    create post--}}
+    @include('layouts.partials.admin.modal_create_form')
+{{--                --}}{{--    edit post--}}
+{{--    @include('layouts.partials.admin.modal_edit_form')--}}
+                {{--    delete post--}}
     @include('layouts.partials.admin.form_delete_user')
 
     @section('script')
