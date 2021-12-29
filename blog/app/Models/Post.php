@@ -15,7 +15,7 @@ class Post extends Model
         'name_image_post',
         'topic',
         'user_id',
-        'Content',
+        'contents',
         'is_public',
     ];
     public function user() {

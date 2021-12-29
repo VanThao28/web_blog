@@ -4,7 +4,7 @@
         <div class="float-left">
             <img src="{{ ShowImageUsers(Auth::user()->image_users) }}" alt="null" class="avatar-md rounded-circle">
         </div>
-        <div class="user-info">
+        <div class="user-info menu-title">
             <a href="#">{{Auth::user()->name}}</a>
             <p class="text-muted m-0">Administrator</p>
         </div>

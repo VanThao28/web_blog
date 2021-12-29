@@ -9,12 +9,11 @@ use Illuminate\Validation\Rules;
 use Validation;
 
 
-use App\Http\Controllers\Admin\AdminUsers;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
-class AdminPost extends Controller
+class AdminPostController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -50,12 +49,7 @@ class AdminPost extends Controller
      */
     public function create()
     {
-        $users = $this->modelUser
-                ->pluck('name', 'id') //pluck dung de nhom ban ghi thanh nhom nho
-                ->toArray(); //chuyen objcet sang mang hoac kieu du lieu json
-
-
-        return view('admin.post.createPost', ['users'=>$users]);
+        //
     }
 
     /**
@@ -64,13 +58,13 @@ class AdminPost extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request )
+    public function store(Request $request)
     {
         $request->validate([
-            'title' => ['required','string', 'max:200'],
+            'title' => ['required','string', 'max:100'],
             'image_post' => ['required', 'mimes:jpeg,jpg,png','max:20000'],
             'topic' => ['required', 'string', 'max:50'],
-            'Content' => ['required','max:100000'],
+            'contents' => ['required','max:5000'],
             'is_public' => 'required',
         ]);
 
@@ -80,7 +74,7 @@ class AdminPost extends Controller
             'name_image_post',
             'topic',
             'user_id',
-            'Content',
+            'contents',
             'is_public',
         ]);
 
@@ -88,7 +82,7 @@ class AdminPost extends Controller
             'title' => $input['title'],
             'formData' => $input['image_post'],
             'topic' => $input['topic'],
-            'Content' => $input['Content'],
+            'contents' => $input['contents'],
             'is_public' => $input['is_public'],
         ];
         $data['is_public'] = isset($data['is_public']) ? (int) $data['is_public'] : 0;
@@ -105,10 +99,13 @@ class AdminPost extends Controller
 
         } catch (\Exception $e) {
             \Log::error($e);
-            $error = 'create post error';
+            $error = 'update post error';
+            return redirect()
+                ->route('admin.postIndex')
+                ->with('error', $error);
 
          }
-        return response()->json('success post');
+        return response()->json(['success'=>'success post']);
     }
 
     /**
@@ -129,18 +126,11 @@ class AdminPost extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        $users = $this->modelUser->get();
-
-        $posts = $this->modelPost->findOrFail($id);
-
-        $name_post = $posts->user()->first();
-        return view('admin.post.edit_post',[
-            'post' =>$posts,
-            'users' =>$users,
-            'name_post' => $name_post,
-        ]);
+        $postId =(int) $request->post_id;
+        $posts = $this->modelPost->findOrFail($postId);
+        return response()->json(['data'=>$posts]);
     }
 
     /**
@@ -150,27 +140,35 @@ class AdminPost extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        dd('ok');
-        $posts = $this->modelPost->findOrFail($id);
-
         $request->validate([
             'title' => ['required','string', 'max:200'],
             'image_post' => ['mimes:jpeg,jpg,png','max:20000'],
             'topic' => ['required', 'string', 'max:50'],
-            'Content' => ['required','max:100000'],
-            'is_public' => 'required',
+            'contents' => ['required','max:100000'],
         ]);
-        $data = $request->only([
+        $input = $request->only([
             'title',
             'image_post',
             'name_image_post',
             'topic',
             'user_id',
-            'Content',
+            'contents',
             'is_public',
         ]);
+        $posts = $this->modelPost->find($request->post_id);
+
+        $image_post  = empty($input['image_post']) ? $posts->image_post : $input['image_post'];
+
+        $data= [
+            'title' => $input['title'],
+            'image_post' => $image_post,
+            'topic' => $input['topic'],
+            'user_id' => $input['user_id'],
+            'contents' => $input['contents'],
+            'is_public' => $input['is_public'],
+        ];
         $data['is_public'] = isset($data['is_public']) ? (int) $data['is_public'] : 0;
         $data['user_id'] = (int)$data['user_id'];
         $file = $request->file('image_post');
@@ -182,10 +180,6 @@ class AdminPost extends Controller
                 $data['image_post'] = $file->hashName();
             }
             $posts->update($data);
-            $msg = 'update post seccess';
-            return redirect()
-                ->route('admin.postIndex')
-                ->with('msg', $msg);
         } catch (\Exception $e) {
             \Log::error($e);
             $error = 'update post error';
@@ -193,6 +187,7 @@ class AdminPost extends Controller
                 ->route('admin.postIndex')
                 ->with('error', $error);
         }
+        return response()->json(['success'=>'success update post']);
     }
 
     /**
@@ -201,15 +196,12 @@ class AdminPost extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $posts = $this->modelPost->findOrFail($id);
+        $postId = (int) $request->post_id;
+        $posts = $this->modelPost->findOrFail($postId);
         try {
             $posts->delete();
-            $msg = 'delete post seccess';
-            return redirect()
-                ->route('admin.postIndex')
-                ->with('msg', $msg);
         } catch (\Exception $e) {
             \Log::error($e);
             $error = 'delete post error';
@@ -217,6 +209,7 @@ class AdminPost extends Controller
                 ->route('admin.postIndex')
                 ->with('error', $error);
         }
+        return response()->json(['data'=>$posts]);
     }
     public function search(Request $request) {
        if ($request->isMethod('post'))

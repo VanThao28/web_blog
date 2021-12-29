@@ -13,12 +13,12 @@
                                     <p>{{ $key_blog->created_at->format('m') }}</p>
                                 </a>
                             </div>
-
+ff
                             <div class="blog_details">
                                 <a class="d-inline-block" href="{{ route('clinet.single_blog',['id' => $key_blog->id]) }}">
                                     <h2>{{ $key_blog->title }}</h2>
                                 </a>
-                                <p>{{ substr($key_blog->Content,0,200) }}...</p>
+                                <p>{{ substr($key_blog->contents,0,200) }}...</p>
                                 <ul class="blog-info-link">
                                     <li><a href="#"><i class="fa fa-user"></i>{{ $key_blog->user->name }}</a></li>
                                     <li><a href="#"><i class="fa fa-comments"></i> 03 Comments</a></li>
