@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateThrePostTable extends Migration
+class UpdateFoPostTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class UpdateThrePostTable extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->string('name_image_post')->nullable()->after('image_post');
+            $table->renameColumn('Content','contents')->change();
         });
     }
 
@@ -26,7 +26,7 @@ class UpdateThrePostTable extends Migration
     public function down()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->dropColumn('name_image_post');
+            $table->text('Content', 500)->nullable();
         });
     }
 }

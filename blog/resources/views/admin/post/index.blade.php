@@ -54,6 +54,7 @@
                                     <th class="sorting" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 50px;" aria-label="Position: activate to sort column ascending">Image Post</th>
                                     <th class="sorting" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 200px; align-items: center" aria-label="Office: activate to sort column ascending">Title</th>
                                     <th class="sorting" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 50px;" aria-label="Office: activate to sort column ascending">Poster</th>
+                                    <th class="sorting" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 50px;" aria-label="Office: activate to sort column ascending">Topic</th>
                                     <th class="sorting" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 200px;" aria-label="Office: activate to sort column ascending">Content</th>
                                     <th class="sorting" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 50px;" aria-label="Office: activate to sort column ascending">Create Date</th>
                                     <th class="sorting" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 50px;" aria-label="Office: activate to sort column ascending">Display</th>
@@ -80,9 +81,10 @@
                                             </p>
                                         </td>
                                         <td>{{$post->user->name}}</td>
+                                        <td>{{ $post->topic }}</td>
                                         <td>
                                             <p class="text">
-                                                <span>{{substr($post->Content, 0, 200)}} ... </span>{{--substr dung de gioi han tu hien thi--}}
+                                                <span>{{substr($post->contents, 0, 200)}} ... </span>{{--substr dung de gioi han tu hien thi--}}
                                             </p>
                                         </td>
                                         <td>{{$post->created_at}}</td>
@@ -93,17 +95,17 @@
                                         @endif
                                         <td style=""><a href="{{ route('clinet.detail',['id' => $post->id]) }}" class="btn btn-icon btn-primary"> <i class="fas fa-eye"></i> </a></td>
                                         <td>
-{{--                                            <button type="button" class="btn btn-primary btn_edit_post" style="margin-bottom: 5px;"--}}
-{{--                                                    data-postId="{{ $post->id }}"--}}
-{{--                                                    data-toggle="modal"--}}
-{{--                                                    data-target="#modal_edit_post"--}}
-{{--                                                    ><i class="fas fa-edit"></i>--}}
-{{--                                            </button>--}}
+                                            <button type="button" class="btn btn-primary btn_edit_post" id="btn_edit_post_id" style="margin-bottom: 5px;"
+                                                    data-postId="{{ $post->id }}"
+                                                    data-toggle="modal"
+                                                    data-target="#modal_edit_post"
+                                                    ><i class="fas fa-edit"></i>
+                                            </button>
 
                                             <button class="btn btn-icon btn-danger delete_val"
-                                                    data-toggle="modal"
-                                                    data-target="#modal-delete"
-                                                    data-url="{{ route('admin.DeletePost', ['id' => $post->id]) }}"> <i class="fas fa-trash-alt"></i>
+                                                    data-postId="{{ $post->id }}"
+{{--                                                    data-url="{{ route('admin.DeletePost', ['id' => $post->id]) }}"--}}
+                                            > <i class="fas fa-trash-alt"></i>
                                             </button>
                                         </td>
                                     </tr>
@@ -126,11 +128,9 @@
         </div>
     </div>
                 {{--    create post--}}
-    @include('layouts.partials.admin.modal_create_form')
-{{--                --}}{{--    edit post--}}
-{{--    @include('layouts.partials.admin.modal_edit_form')--}}
-                {{--    delete post--}}
-    @include('layouts.partials.admin.form_delete_user')
+    @include('layouts.partials.admin.form-modal-post.modal_create_post_form')
+                {{--    edit post--}}
+    @include('layouts.partials.admin.form-modal-post.modal_edit_post_form')
 
     @section('script')
         @include('layouts.partials.admin.js')

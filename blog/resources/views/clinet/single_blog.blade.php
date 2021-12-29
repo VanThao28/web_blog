@@ -16,7 +16,7 @@
                                 <li><a href="#"><i class="fa fa-comments"></i> 03 Comments</a></li>
                             </ul>
                             <p class="excert">
-                                {{ $blog_detail->Content }}
+                                {{ $blog_detail->contents }}
                             </p>
                             <div class="quote-wrapper">
                                 <div class="quotes">

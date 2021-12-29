@@ -12,7 +12,7 @@ use Validation;
 use App\Models\User;
 use Mockery\Exception;
 
-class AdminUsers extends Controller
+class AdminUsersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,7 +41,7 @@ class AdminUsers extends Controller
      */
     public function create()
     {
-        return view('admin.users.create_user');
+        return view('layouts.partials.form-modal-user.modal_create_user_form');
     }
 
     /**
@@ -53,41 +53,40 @@ class AdminUsers extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255','regex:/(^([a-zA-z]+)(\d+)?$)/u'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'image_users' =>['required','mimes:jpeg,jpg,png','max:20000'],
             'password' => ['required', Rules\Password::defaults()],
         ]);
-        $data = $request->only([
+
+        $input = $request->only([
             'name',
             'email',
             'image_users',
             'password',
         ]);
-        //hash::make dùng mã hóa mật khẩu.
+        $data = [
+            'name' => $input['name'],
+            'email' => $input['email'],
+            'formDataUser' => $input['image_users'],
+            'password' => $input['password'],
+        ];
         $data['password'] = Hash::make($data['password']);
         $file = $request->file('image_users');
         // kiểm tra ngoại lệ
+
         try {
             if ($file) {
                 $file->store('public/users_image/');
                 $data['image_name'] = $file->getClientOriginalName();
                 $data['image_users'] = $file->hashName();
             }
-
-            $users = $this->modelUser->create($data);
-            $msg = 'create users success.';
-
-            return redirect()
-                ->route('admin.index',['users'=>$users->name])
-                ->with('msg', $msg);
+            $this->modelUser->create($data);
         } catch (\Exception $e) {
             \Log::error($e);
         }
-        $error = 'create users error.';
-        return redirect()
-            ->route('admin.index')
-            ->with('error', $error);
+        return response()->json(['success' =>'success user']);
+
     }
 
     /**
@@ -107,11 +106,11 @@ class AdminUsers extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        $users = $this->modelUser->findOrFail($id);
-
-        return view('admin.users.edit_user',['user'=>$users]);
+        $userId =(int) $request->user_id;
+        $users = $this->modelUser->findOrFail($userId);
+        return response()->json(['data'=>$users]);
     }
 
     /**
@@ -121,21 +120,29 @@ class AdminUsers extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $users = $this->modelUser->findOrFail($id);
         $request->validate([
-            'name' => ['string', 'max:255'],
-            'email' => [ 'string', 'email', 'max:255'],
-            'image_users' =>['mimes:jpeg,jpg,png','max:20000'],
-            'password' => [Rules\Password::defaults()],
+            'name' => ['required','string', 'max:2','regex:/(^([a-zA-z]+)(\d+)?$)/u'],
+            'email' => ['required','string', 'email', 'max:2'],
+            'image_users' =>['mimes:jpeg,jpg,png','max:20'],
+            'password' => ['required',Rules\Password::defaults()],
         ]);
-        $data = $request->only([
+        $input = $request->only([
             'name',
             'email',
             'image_users',
             'password',
         ]);
+        $users = $this->modelUser->find($request->user_id);
+
+        $image_user = empty($input['image_users']) ? $users->image_users : $input['image_users'];
+        $data = [
+            'name' => $input['name'],
+            'email' => $input['email'],
+            'image_users' => $image_user,
+            'password' => $input['password'],
+        ];
 
         //hash::make dùng mã hóa mật khẩu.
         $file = $request->file('image_users'); // lỗi ko nhận được file image.
@@ -149,17 +156,10 @@ class AdminUsers extends Controller
                 $data['image_users'] = $file->hashName();
             }
             $users->update($data);
-            $msg = 'edit users success.';
-            return redirect()
-                ->route('admin.index',['editUsers' => $users->name])
-                ->with('msg', $msg);
         } catch (\Exception $e) {
             \Log::error($e);
         }
-        $error = 'edit users error.';
-        return redirect()
-            ->route('admin.index')
-            ->with('error', $error);
+        return response()->json(['success'=>'success update user']);
     }
 
     /**
@@ -168,22 +168,19 @@ class AdminUsers extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $users = $this->modelUser->findOrFail($id);
+        $users = $this->modelUser->findOrFail($request->user_id);
         try {
             $users ->delete();
-            $msg = 'delete users success';
+            $msg = 'delete users error';
             return redirect()
-                ->route('admin.index')
                 ->with('msg', $msg);
         } catch (\Exception $e) {
             \Log::error($e);
         }
         $error = 'delete users error';
-        return redirect()
-            ->route('admin.index')
-            ->with('error', $error);
+        return response()->json('delete user success');
 
    }
    public function search(Request $request) {

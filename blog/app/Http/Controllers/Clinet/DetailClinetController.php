@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\User;
 
-class DetailClinet extends Controller
+class DetailClinetController extends Controller
 {
     protected $modelPost;
     protected $modelUser;

@@ -32,7 +32,7 @@
                             <p class="about-pera1" style="font-size: 14px;color: blue;">{{ $name_post->name }}</p>
                             <p class="about-pera1" style="font-size: 14px;color: blue;">{{ $post->created_at->format('d-m-Y') }}</p>
                             <p class="about-pera1 mb-25">
-                                {{ $post->Content }}
+                                {{ $post->contents }}
                             </p>
                         </div>
                         <div class="social-share pt-30">

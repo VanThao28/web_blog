@@ -2,14 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 /* Admin*/
-use App\Http\Controllers\Admin\AdminUsers;
-use App\Http\Controllers\Admin\AdminPost;
+use App\Http\Controllers\Admin\AdminUsersController;
+use App\Http\Controllers\Admin\AdminPostController;
 /*end Admin*/
 
 /* Clinet*/
-use App\Http\Controllers\Clinet\IndexClinet;
-use App\Http\Controllers\Clinet\DetailClinet;
-use App\Http\Controllers\Clinet\BlogClinet;
+use App\Http\Controllers\Clinet\IndexClinetController;
+use App\Http\Controllers\Clinet\DetailClinetController;
+use App\Http\Controllers\Clinet\BlogClinetController;
 /*end clinet*/
 /*
 |--------------------------------------------------------------------------
@@ -26,55 +26,53 @@ use App\Http\Controllers\Clinet\BlogClinet;
 
 Route::name('admin')->prefix('admin')->middleware(['auth'])->group(function (){
     //show user
-        Route::get('/index', [AdminUsers::class, 'index'])->name('.index');
+        Route::get('/index', [AdminUsersController::class, 'index'])->name('.index');
 
         //create user
-        Route::post('/StoreUser', [AdminUsers::class, 'store'])->name('.StoreUser');
-        Route::get('/CreateUser', [AdminUsers::class, 'create'])->name('.CreateUser');
+        Route::post('/StoreUser', [AdminUsersController::class, 'store'])->name('.StoreUser');
 
         //edit user
-        Route::post('/update/{user}', [AdminUsers::class,'update'])->name('.UpdateUser');
-        Route::get('/users/{id}/edit', [AdminUsers::class, 'edit'])->name('.EditUser');
+        Route::post('/UserUpdate', [AdminUsersController::class,'update'])->name('.UpdateUser');
+        Route::post('/UsersEdit', [AdminUsersController::class, 'edit'])->name('.EditUser');
 
         //delete user
-        Route::delete('delete_user/{id}', [AdminUsers::class, 'destroy'])->name('.DeleteUser');
+        Route::post('/UserDelete', [AdminUsersController::class, 'destroy'])->name('.DeleteUser');
 
         //seach user
-        Route::post('/search', [AdminUsers::class, 'search'])->name('.SearchUser');
+        Route::post('/search', [AdminUsersController::class, 'search'])->name('.SearchUser');
 
     //end user
     //
     //show post
-        Route::get('/post/index', [AdminPost::class, 'index'])->name('.postIndex');
+        Route::get('/post/index', [AdminPostController::class, 'index'])->name('.postIndex');
 
         //create post
-        Route::post('/StorePost', [AdminPost::class, 'store'])->name('.StorePost');
+        Route::post('/StorePost', [AdminPostController::class, 'store'])->name('.StorePost');
 
         //show post
-        //Route::get('/ShowPost/{id}', [AdminPost::class, 'show'])->name('.ShowPost');
+//        Route::get('/ShowPost/{id}', [AdminPostController::class, 'show'])->name('.ShowPost');
 
         //edit post
-        Route::post('updatePost/{post}', [AdminPost::class, 'update'])->name('.UpdatePost');
-        Route::get('/post/{id}/edit', [AdminPost::class, 'edit'])->name('.EditPost');
-//        Route::post('/postSession',[AdminPost::class, 'postSession'])->name('.SavePost');
+        Route::post('/PostUpdate', [AdminPostController::class, 'update'])->name('.UpdatePost');
+        Route::post('/PostEdit', [AdminPostController::class, 'edit'])->name('.EditPost');
 
         //delete post
-        Route::delete('delete_post/{id}', [AdminPost::class, 'destroy'])->name('.DeletePost');
+        Route::post('delete_post', [AdminPostController::class, 'destroy'])->name('.DeletePost');
 
         //seach post
-        Route::post('/search_post',[AdminPost::class, 'search'])->name('.searchPost');
+        Route::post('/search_post',[AdminPostController::class, 'search'])->name('.searchPost');
     //end post
 });
 require __DIR__.'/auth.php';
 
 /*clinet*/
-    Route::get('/clinet/index', [IndexClinet::class, 'index'])->name('index.clinet');
+    Route::get('/clinet/index', [IndexClinetController::class, 'index'])->name('index.clinet');
 
-    Route::get('/details/{id}', [DetailClinet::class, 'detail'])->name('clinet.detail');
+    Route::get('/details/{id}', [DetailClinetController::class, 'detail'])->name('clinet.detail');
 
-    Route::get('/clinet/blog', [BlogClinet::class, 'blog'])->name('clinet.blog');
+    Route::get('/clinet/blog', [BlogClinetController::class, 'blog'])->name('clinet.blog');
 
-    Route::get('clinet/single_blog/{id}', [BlogClinet::class, 'blogDetail'])->name('clinet.single_blog');
+    Route::get('clinet/single_blog/{id}', [BlogClinetController::class, 'blogDetail'])->name('clinet.single_blog');
 /*end clinet*/
 
 Route::get('/About', function () {
