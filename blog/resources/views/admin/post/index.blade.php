@@ -74,10 +74,12 @@
                                         @php
                                             $id++;
                                         @endphp
-                                        <td><img src="{{ ShowImagePost($post->image_post) }}" title="contact-img" class="rounded-circle avatar-sm" alt="{{ $post->name_image_post }}"></td>
+                                        <td>
+                                            <img src="{{ ShowImagePost($post->image_post) }}" title="contact-img" class="rounded-circle avatar-sm image_post" alt="{{ $post->name_image_post }}">
+                                        </td>
                                         <td>
                                             <p class="title">
-                                                    <span>{{ $post->title }}</span>
+                                                    <span class="title_post">{{ $post->title }}</span>
                                             </p>
                                         </td>
                                         <td>{{$post->user->name}}</td>
@@ -87,11 +89,11 @@
                                                 <span>{{substr($post->contents, 0, 200)}} ... </span>{{--substr dung de gioi han tu hien thi--}}
                                             </p>
                                         </td>
-                                        <td>{{$post->created_at}}</td>
+                                        <td class="create_at">{{$post->created_at}}</td>
                                          @if($post->is_public == 0)
-                                            <td>ẩn</td>
+                                            <td class="is_public">ẩn</td>
                                         @else
-                                            <td>Hiển thị</td>
+                                            <td class="is_public">Hiển thị</td>
                                         @endif
                                         <td style=""><a href="{{ route('clinet.detail',['id' => $post->id]) }}" class="btn btn-icon btn-primary"> <i class="fas fa-eye"></i> </a></td>
                                         <td>

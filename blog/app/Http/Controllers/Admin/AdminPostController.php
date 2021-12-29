@@ -9,6 +9,7 @@ use Illuminate\Validation\Rules;
 use Validation;
 
 
+use App\Http\Controllers\Admin\AdminUsersControler;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -106,18 +107,6 @@ class AdminPostController extends Controller
 
          }
         return response()->json(['success'=>'success post']);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-//        $posts = $this->modelPost->findOrFail($id);
-//        return view('clinet.details',['post'=> $posts]);
     }
 
     /**
@@ -223,5 +212,15 @@ class AdminPostController extends Controller
                ->paginate(config('paginate.show'));
        }
        return view('admin.post.index', ['posts' => $data]);
+    }
+    public function postSession(Request $request) {
+        $postId =(int) $request->post_id;
+        $data = [
+            'btn_edit_post' => [
+                'id' => $postId
+            ],
+        ];
+        session($data);
+        return json_encode($data);
     }
 }
