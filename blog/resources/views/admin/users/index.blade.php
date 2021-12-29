@@ -8,11 +8,6 @@
     </div>
 
     <div class="row md-5">
-        @if(session('msg'))
-          <div class="alert alert-success">
-            {{ session('msg') }}
-          </div>
-        @endif
         @if(session('error'))
           <div class="alert alert-danger">
               {{ session('error') }}
@@ -25,7 +20,7 @@
         <div class="col-12">
             <div class="mt-1">
                 <div id="key-table_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
-                    <a href="{{route('admin.CreateUser')}}" class="btn btn-icon btn-success" > <i class="fas fa-plus"></i> </a>
+                    <button class="btn btn-icon btn-success" data-toggle="modal" data-target="#modal_create_user" > <i class="fas fa-plus"></i> </button>
                     <div class="row">
                         <div class="col-sm-12 col-md-6">
                             <div id="key-table_filter" class="dataTables_filter">
@@ -74,11 +69,14 @@
                                         <td>{{$user->email}}</td>
                                         <td>{{$user->created_at}}</td>
                                         <td>
-                                            <a href="{{ route('admin.EditUser', ['id' => $user->id]) }}" style="margin-bottom: 5px;" class="btn btn-icon btn-primary"> <i class="fas fa-edit"></i> </a>
-                                            <button class="btn btn-icon btn-danger delete_val"
+                                            <button type="button" style="margin-bottom: 5px;" class="btn btn-icon btn-primary btn-modal-edit-user"
+                                                    data-userId="{{$user->id}}"
                                                     data-toggle="modal"
-                                                    data-target="#modal-delete"
-                                                    data-url="{{ route('admin.DeleteUser', ['id'=>$user->id]) }}"> <i class="fas fa-trash-alt"></i>
+                                                    data-target="#modal_edit_user"
+                                                ><i class="fas fa-edit"></i> </button>
+                                            <button type="button" class="btn btn-icon btn-danger btn-delete-user"
+                                                   data-userId="{{$user->id}}"
+                                                    > <i class="fas fa-trash-alt"></i>
                                             </button>
                                         </td>
                                     </tr>
@@ -100,5 +98,12 @@
             </div>
         </div>
     </div>
-    @include('layouts.partials.admin.form_delete_user')
+            {{--create user--}}
+    @include('layouts.partials.admin.form-modal-user.modal_create_user_form')
+            {{--    edit user--}}
+    @include('layouts.partials.admin.form-modal-user.modal_edit_user_form')
+
+    @section('script')
+        @include('layouts.partials.admin.js')
+    @endsection
 </x-app-admin>

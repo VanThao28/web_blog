@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 /* Admin*/
-use App\Http\Controllers\Admin\AdminUsersControler;
+use App\Http\Controllers\Admin\AdminUsersController;
 use App\Http\Controllers\Admin\AdminPostController;
 /*end Admin*/
 
@@ -26,21 +26,20 @@ use App\Http\Controllers\Clinet\BlogClinetController;
 
 Route::name('admin')->prefix('admin')->middleware(['auth'])->group(function (){
     //show user
-        Route::get('/index', [AdminUsersControler::class, 'index'])->name('.index');
+        Route::get('/index', [AdminUsersController::class, 'index'])->name('.index');
 
         //create user
-        Route::post('/StoreUser', [AdminUsersControler::class, 'store'])->name('.StoreUser');
-        Route::get('/CreateUser', [AdminUsersControler::class, 'create'])->name('.CreateUser');
+        Route::post('/StoreUser', [AdminUsersController::class, 'store'])->name('.StoreUser');
 
         //edit user
-        Route::post('/update/{user}', [AdminUsersControler::class,'update'])->name('.UpdateUser');
-        Route::get('/users/{id}/edit', [AdminUsersControler::class, 'edit'])->name('.EditUser');
+        Route::post('/UserUpdate', [AdminUsersController::class,'update'])->name('.UpdateUser');
+        Route::post('/UsersEdit', [AdminUsersController::class, 'edit'])->name('.EditUser');
 
         //delete user
-        Route::delete('delete_user/{id}', [AdminUsersControler::class, 'destroy'])->name('.DeleteUser');
+        Route::post('/UserDelete', [AdminUsersController::class, 'destroy'])->name('.DeleteUser');
 
         //seach user
-        Route::post('/search', [AdminUsersControler::class, 'search'])->name('.SearchUser');
+        Route::post('/search', [AdminUsersController::class, 'search'])->name('.SearchUser');
 
     //end user
     //
@@ -51,17 +50,14 @@ Route::name('admin')->prefix('admin')->middleware(['auth'])->group(function (){
         Route::post('/StorePost', [AdminPostController::class, 'store'])->name('.StorePost');
 
         //show post
-        //Route::get('/ShowPost/{id}', [AdminPost::class, 'show'])->name('.ShowPost');
+//        Route::get('/ShowPost/{id}', [AdminPostController::class, 'show'])->name('.ShowPost');
 
         //edit post
-        Route::post('/postSession',[AdminPostController::class, 'postSession'])->name('.SavePost');
-
-        Route::post('updatePost/{post}', [AdminPostController::class, 'update'])->name('.UpdatePost');
-        Route::post('/post/{id}/edit', [AdminPostController::class, 'edit'])->name('.EditPost');
-
+        Route::post('/PostUpdate', [AdminPostController::class, 'update'])->name('.UpdatePost');
+        Route::post('/PostEdit', [AdminPostController::class, 'edit'])->name('.EditPost');
 
         //delete post
-        Route::delete('delete_post/{id}', [AdminPostController::class, 'destroy'])->name('.DeletePost');
+        Route::post('delete_post', [AdminPostController::class, 'destroy'])->name('.DeletePost');
 
         //seach post
         Route::post('/search_post',[AdminPostController::class, 'search'])->name('.searchPost');
