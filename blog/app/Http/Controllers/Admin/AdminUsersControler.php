@@ -12,7 +12,7 @@ use Validation;
 use App\Models\User;
 use Mockery\Exception;
 
-class AdminUsersController extends Controller
+class AdminUsersControler extends Controller
 {
     /**
      * Display a listing of the resource.
