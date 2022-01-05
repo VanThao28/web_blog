@@ -2,8 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 /* Admin*/
-use App\Http\Controllers\Admin\AdminUsersController;
+use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AdminPostController;
+use App\Http\Controllers\Clinet\CommentPost;
+
 /*end Admin*/
 
 /* Clinet*/
@@ -26,20 +28,20 @@ use App\Http\Controllers\Clinet\BlogClinetController;
 
 Route::name('admin')->prefix('admin')->middleware(['auth'])->group(function (){
     //show user
-        Route::get('/index', [AdminUsersController::class, 'index'])->name('.index');
+        Route::get('/index', [AdminUserController::class, 'index'])->name('.index');
 
         //create user
-        Route::post('/StoreUser', [AdminUsersController::class, 'store'])->name('.StoreUser');
+        Route::post('/StoreUser', [AdminUserController::class, 'store'])->name('.StoreUser');
 
         //edit user
-        Route::post('/UserUpdate', [AdminUsersController::class,'update'])->name('.UpdateUser');
-        Route::post('/UsersEdit', [AdminUsersController::class, 'edit'])->name('.EditUser');
+        Route::post('/UserUpdate', [AdminUserController::class,'update'])->name('.UpdateUser');
+        Route::post('/UsersEdit', [AdminUserController::class, 'edit'])->name('.EditUser');
 
         //delete user
-        Route::post('/UserDelete', [AdminUsersController::class, 'destroy'])->name('.DeleteUser');
+        Route::post('/UserDelete', [AdminUserController::class, 'destroy'])->name('.DeleteUser');
 
         //seach user
-        Route::post('/search', [AdminUsersController::class, 'search'])->name('.SearchUser');
+        Route::post('/search', [AdminUserController::class, 'search'])->name('.SearchUser');
 
     //end user
     //
@@ -61,6 +63,14 @@ Route::name('admin')->prefix('admin')->middleware(['auth'])->group(function (){
 
         //seach post
         Route::post('/search_post',[AdminPostController::class, 'search'])->name('.searchPost');
+
+        Route::get('clinet/single_blog/{id}', [BlogClinetController::class, 'blogDetail'])->name('clinet.single_blog');
+
+        //comment post
+        Route::post('/comment/store', [CommentPost::class, 'CommentStore'])->name('.CreateComment');
+        Route::post('/commentId', [CommentPost::class,'CommentId'])->name('.CommentId');
+        Route::post('/commentCreate',[CommentPost::class, 'CommentCreate'])->name('.CommentCreateReply');
+        Route::post('/DelComment',[CommentPost::class, 'DelComment'])->name('.DeleteComment');
     //end post
 });
 require __DIR__.'/auth.php';
@@ -72,7 +82,6 @@ require __DIR__.'/auth.php';
 
     Route::get('/clinet/blog', [BlogClinetController::class, 'blog'])->name('clinet.blog');
 
-    Route::get('clinet/single_blog/{id}', [BlogClinetController::class, 'blogDetail'])->name('clinet.single_blog');
 /*end clinet*/
 
 Route::get('/About', function () {

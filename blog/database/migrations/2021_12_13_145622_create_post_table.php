@@ -19,7 +19,7 @@ class CreatePostTable extends Migration
             $table->string('image_post')->nullable();
             $table->string('topic')->nullable();
             $table->bigInteger('user_id');
-            $table->text('Content', 500)->nullable();
+            $table->text('contents', 500)->nullable();
             $table->timestamps();
         });
     }

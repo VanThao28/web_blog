@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdatePostTable extends Migration
+class UpdateForCommentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class UpdatePostTable extends Migration
      */
     public function up()
     {
-        Schema::table('posts', function (Blueprint $table) {
-            $table->renameColumn('user_id')->references('id')->change();
+        Schema::table('comments', function (Blueprint $table) {
+            $table->integer('parent_id')->after('user_id');
         });
     }
 
@@ -25,8 +25,8 @@ class UpdatePostTable extends Migration
      */
     public function down()
     {
-        Schema::table('post', function (Blueprint $table) {
-            $table->bigInteger('user_id');
+        Schema::table('comments', function (Blueprint $table) {
+            $table->dropColumn('commentable_id');
         });
     }
 }
