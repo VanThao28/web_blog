@@ -18,7 +18,12 @@ class Post extends Model
         'contents',
         'is_public',
     ];
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
+    }
+    public function comments()
+    {
+        return $this->hasMany(Comment::class)->where('is_delete','=',0)->whereNull('parent_id');
     }
 }

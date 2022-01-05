@@ -1,4 +1,4 @@
-<x-app-clinet>
+            <x-app-clinet>
     <!-- ================ contact section start ================= -->
     <section class="contact-section">
         <div class="container">

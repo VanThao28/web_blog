@@ -3,16 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Doctrine\DBAL\Driver\Exception;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rules;
 use Validation;
 
 
-use App\Http\Controllers\Admin\AdminUsersControler;
 use App\Models\Post;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 
 class AdminPostController extends Controller
 {

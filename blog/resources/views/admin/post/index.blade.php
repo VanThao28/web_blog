@@ -135,6 +135,6 @@
     @include('layouts.partials.admin.form-modal-post.modal_edit_post_form')
 
     @section('script')
-        @include('layouts.partials.admin.js')
+        @include('layouts.partials.admin.js_admin')
     @endsection
 </x-app-admin>

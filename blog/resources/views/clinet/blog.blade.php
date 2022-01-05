@@ -13,9 +13,8 @@
                                     <p>{{ $key_blog->created_at->format('m') }}</p>
                                 </a>
                             </div>
-ff
                             <div class="blog_details">
-                                <a class="d-inline-block" href="{{ route('clinet.single_blog',['id' => $key_blog->id]) }}">
+                                <a class="d-inline-block" href="{{ route('adminclinet.single_blog',['id' => $key_blog->id]) }}">
                                     <h2>{{ $key_blog->title }}</h2>
                                 </a>
                                 <p>{{ substr($key_blog->contents,0,200) }}...</p>

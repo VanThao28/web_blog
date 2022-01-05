@@ -6,23 +6,13 @@
     });
     $(document).ready(function () {
         //comment id
-
-        $('.btn-reply-comment').click(function() {
-            $('.form_comment_display').hide();
+        $('.reply_comment').click(function() {
+            $('.comment_form').hide();
             var commentid = $(this).data('commentid');
-            $.ajax({
-                type: 'post',
-                url: '{{ route('admin.CommentId') }}',
-                data: {
-                    commentid: commentid,
-                },
-                dataType: 'json',
-                success:function (data){
-                    console.log('success comment id');
-                    $('.comment_form').find('.comment_id').val(data.data.id);
-                }
-            });
+            let comment_name = ".comment_form_id_" + commentid;
+            $(comment_name).show();
         });
+
         //comment create
         $('.btn_comment_reply').click(function (){
             $.ajax({
@@ -32,8 +22,34 @@
                 success:function(data){
                     console.log('success comment');
                     location.reload();
+                },
+                error:function(data){
+                    $('.textComment').addClass('d-none');
+                    var errors = data.responseJSON;
+                    if($.isEmptyObject(errors)==false){
+                        $.each(errors.errors, function(key,value){
+                            var ErrorId = '.'+key+'_error';
+                            $(ErrorId).removeClass("d-none");
+                            $(ErrorId).text(value);
+                        });
+                    }
                 }
             });
+        });
+
+        $('.btn_delete_comment').click(function (){
+           var delcommentid = $(this).data('delcommentid');
+           $.ajax({
+               method: 'post',
+               url: '{{ route('admin.DeleteComment') }}',
+               data: {
+                   delcommentid:delcommentid,
+               },
+               success:function (data) {
+                   console.log('delete success');
+                   location.reload();
+               }
+           });
         });
     })
 </script>
