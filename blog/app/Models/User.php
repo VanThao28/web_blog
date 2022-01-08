@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -23,6 +22,7 @@ class User extends Authenticatable
         'image_users',
         'image_name',
         'password',
+        'is_delete',
     ];
 
     /**
@@ -45,5 +45,59 @@ class User extends Authenticatable
     ];
     public function post(){
         return $this->hasMany(Post::class);
+    }
+    public function givePermissiongTo(... $permissions)
+    {
+        $permissions = $this->getAllPermissions($permissions);
+        if($permissions === null) {
+            return $this;
+        }
+        $this->permissions()->saveMany($permissions);
+        return $this;
+    }
+    public function withdrawPermissionTo(... $permissions)
+    {
+        $permissions = $this->getAllPermissions($permissions);
+        $this->permissions()->detach($permissions);
+        return $this;
+    }
+    public function refreshPermissions(... $permissions){
+        $this->permission()->detach();
+        return $this->givePermissiongTo($permissions);
+    }
+    public function hasPremissionTo($permission)
+    {
+        return $this->hasPermissionThroughRole($permission) || $this->hasPermission($permission);
+    }
+    public function hasPermissionThroughRole($permission)
+    {
+        foreach ($permission->roles as $role) {
+            if($this->roles->contains($role)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public function hasRole(... $roles)
+    {
+        foreach ($roles as $role) {
+            if($this->roles->contains('code', $role)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public function roles() {
+        return $this->belongsToMany(Role::class,'role_user','users_id','role_id');
+    }
+    public function permission() {
+        return $this->belongsToMany(Permission::class,'user_permission');
+    }
+    protected  function hasPermission ($permission) {
+        return (bool) $this->permission->where('code', $permission->code)->count();
+    }
+    public function getAllPermissions(array $permissions)
+    {
+        return Permission::whereIn('code',$permissions)->get();
     }
 }

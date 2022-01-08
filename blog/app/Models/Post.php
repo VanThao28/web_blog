@@ -17,6 +17,7 @@ class Post extends Model
         'user_id',
         'contents',
         'is_public',
+        'is_delete',
     ];
     public function user()
     {

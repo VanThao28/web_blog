@@ -25,9 +25,11 @@
         <div class="col-12">
             <div class="mt-1">
                 <div id="key-table_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
-                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal_create_post">
-                        <i class="fas fa-plus"></i>
-                    </button>
+                    @if(Auth::user()->can('add_post',$posts))
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal_create_post">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    @endif
                     <div class="row">
                         <div class="col-sm-12 col-md-6">
                             <div id="key-table_filter" class="dataTables_filter">
@@ -97,18 +99,21 @@
                                         @endif
                                         <td style=""><a href="{{ route('clinet.detail',['id' => $post->id]) }}" class="btn btn-icon btn-primary"> <i class="fas fa-eye"></i> </a></td>
                                         <td>
-                                            <button type="button" class="btn btn-primary btn_edit_post" id="btn_edit_post_id" style="margin-bottom: 5px;"
-                                                    data-postId="{{ $post->id }}"
-                                                    data-toggle="modal"
-                                                    data-target="#modal_edit_post"
-                                                    ><i class="fas fa-edit"></i>
-                                            </button>
-
-                                            <button class="btn btn-icon btn-danger delete_val"
-                                                    data-postId="{{ $post->id }}"
-{{--                                                    data-url="{{ route('admin.DeletePost', ['id' => $post->id]) }}"--}}
-                                            > <i class="fas fa-trash-alt"></i>
-                                            </button>
+                                            @if(Auth::user()->can('edit_post', $posts))
+                                                <button type="button" class="btn btn-primary btn_edit_post" id="btn_edit_post_id" style="margin-bottom: 5px;"
+                                                        data-postId="{{ $post->id }}"
+                                                        data-toggle="modal"
+                                                        data-target="#modal_edit_post"
+                                                        ><i class="fas fa-edit"></i>
+                                                </button>
+                                            @endif
+                                            @if(Auth::user()->can('delete_post',$posts))
+                                                <button class="btn btn-icon btn-danger delete_val"
+                                                        data-postId="{{ $post->id }}"
+    {{--                                                    data-url="{{ route('admin.DeletePost', ['id' => $post->id]) }}"--}}
+                                                > <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            @endif
                                         </td>
                                     </tr>
 

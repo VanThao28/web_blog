@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
@@ -29,6 +30,7 @@ class AdminUserController extends Controller
         //lấy data user,sắp xếp từ cao đền thấp, hiển thị giá trị trang
         $users = $this->modelUser
             ->orderby('id', 'desc')
+            ->where('is_delete',0)
             ->paginate(config('paginate.show'));
         return view('admin.users.index', ['users' => $users]);
     }
@@ -40,7 +42,7 @@ class AdminUserController extends Controller
      */
     public function create()
     {
-        return view('layouts.partials.form-modal-user.modal_create_user_form');
+        //
     }
 
     /**
@@ -49,14 +51,18 @@ class AdminUserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, User $user)
     {
+        if(!Gate::allows('add_user', $user)){
+            abort(403);
+        }
         $request->validate([
             'name' => ['required', 'string', 'max:255','regex:/(^([a-zA-z]+)(\d+)?$)/u'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'image_users' =>['required','mimes:jpeg,jpg,png','max:20000'],
             'password' => ['required', Rules\Password::defaults()],
         ]);
+
 
         $input = $request->only([
             'name',
@@ -107,6 +113,7 @@ class AdminUserController extends Controller
      */
     public function edit(Request $request)
     {
+
         $userId =(int) $request->user_id;
         $users = $this->modelUser->findOrFail($userId);
         return response()->json(['data'=>$users]);
@@ -119,13 +126,16 @@ class AdminUserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, User $user)
     {
+        if(!Gate::allows('edit_user',$user)){
+            abort(403);
+        }
         $request->validate([
-            'name' => ['required','string', 'max:255','regex:/(^([a-zA-z]+)(\d+)?$)/u'],
-            'email' => ['required','string', 'email', 'max:255'],
+            'name' => ['string', 'max:255','regex:/(^([a-zA-z]+)(\d+)?$)/u'],
+            'email' => ['string', 'email', 'max:255'],
             'image_users' =>['mimes:jpeg,jpg,png','max:20000'],
-            'password' => ['required',Rules\Password::defaults()],
+            'password' => [Rules\Password::defaults()],
         ]);
         $input = $request->only([
             'name',
@@ -167,18 +177,16 @@ class AdminUserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy(Request $request, User $user)
     {
-        $users = $this->modelUser->findOrFail($request->user_id);
-        try {
-            $users ->delete();
-            $msg = 'delete users error';
-            return redirect()
-                ->with('msg', $msg);
-        } catch (\Exception $e) {
-            \Log::error($e);
+        if(!Gate::allows('delete_user', $user)){
+            abort(403);
         }
-        $error = 'delete users error';
+        $users = $this->modelUser->findOrFail($request->user_id);
+        $data_delete = [
+            'is_delete'=>1,
+        ];
+        $users->update($data_delete);
         return response()->json('delete user success');
 
     }

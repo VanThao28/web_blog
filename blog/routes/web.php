@@ -51,8 +51,6 @@ Route::name('admin')->prefix('admin')->middleware(['auth'])->group(function (){
         //create post
         Route::post('/StorePost', [AdminPostController::class, 'store'])->name('.StorePost');
 
-        //show post
-//        Route::get('/ShowPost/{id}', [AdminPostController::class, 'show'])->name('.ShowPost');
 
         //edit post
         Route::post('/PostUpdate', [AdminPostController::class, 'update'])->name('.UpdatePost');
@@ -65,6 +63,8 @@ Route::name('admin')->prefix('admin')->middleware(['auth'])->group(function (){
         Route::post('/search_post',[AdminPostController::class, 'search'])->name('.searchPost');
 
         Route::get('clinet/single_blog/{id}', [BlogClinetController::class, 'blogDetail'])->name('clinet.single_blog');
+
+
 
         //comment post
         Route::post('/comment/store', [CommentPost::class, 'CommentStore'])->name('.CreateComment');
