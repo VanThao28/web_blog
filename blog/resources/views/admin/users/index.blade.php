@@ -20,7 +20,9 @@
         <div class="col-12">
             <div class="mt-1">
                 <div id="key-table_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
-                    <button class="btn btn-icon btn-success" data-toggle="modal" data-target="#modal_create_user" > <i class="fas fa-plus"></i> </button>
+                    @if(Auth::user()->can('add_user', $users))
+                        <button class="btn btn-icon btn-success" data-toggle="modal" data-target="#modal_create_user" > <i class="fas fa-plus"></i> </button>
+                    @endif
                     <div class="row">
                         <div class="col-sm-12 col-md-6">
                             <div id="key-table_filter" class="dataTables_filter">
@@ -69,15 +71,19 @@
                                         <td>{{$user->email}}</td>
                                         <td>{{$user->created_at}}</td>
                                         <td>
-                                            <button type="button" style="margin-bottom: 5px;" class="btn btn-icon btn-primary btn-modal-edit-user"
-                                                    data-userId="{{$user->id}}"
-                                                    data-toggle="modal"
-                                                    data-target="#modal_edit_user"
-                                                ><i class="fas fa-edit"></i> </button>
-                                            <button type="button" class="btn btn-icon btn-danger btn-delete-user"
-                                                   data-userId="{{$user->id}}"
-                                                    > <i class="fas fa-trash-alt"></i>
-                                            </button>
+                                            @if(Auth::user()->can('edit_user', $users))
+                                                <button type="button" style="margin-bottom: 5px;" class="btn btn-icon btn-primary btn-modal-edit-user"
+                                                        data-userId="{{$user->id}}"
+                                                        data-toggle="modal"
+                                                        data-target="#modal_edit_user"
+                                                    ><i class="fas fa-edit"></i> </button>
+                                            @endif
+                                            @if(Auth::user()->can('delete_user',$users))
+                                                <button type="button" class="btn btn-icon btn-danger btn-delete-user"
+                                                       data-userId="{{$user->id}}"
+                                                        > <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            @endif
                                         </td>
                                     </tr>
 

@@ -30,11 +30,6 @@
                     </div>
                     <div class="navigation-top">
                         <div class="d-sm-flex justify-content-between text-center">
-                            <p class="like-info"><span class="align-middle"><i class="fa fa-heart"></i></span> Lily and 4
-                                people like this</p>
-                            <div class="col-sm-4 text-center my-2 my-sm-0">
-                                <!-- <p class="comment-count"><span class="align-middle"><i class="fa fa-comment"></i></span> 06 Comments</p> -->
-                            </div>
                             <ul class="social-icons">
                                 <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
                                 <li><a href="#"><i class="fab fa-twitter"></i></a></li>
@@ -51,7 +46,7 @@
                     </div>
                     <div class="comment-form">
                         <h4>Leave a Reply</h4>
-                        <form class="form-contact comment_form" action="{{ route('admin.CreateComment') }}" method="post">
+                        <form class="form-contact" action="{{ route('admin.CreateComment') }}" method="post">
                             @csrf
                             <div class="row">
                                 <input type="hidden" name="post_id" value="{{ $blog_detail->id }}"/>

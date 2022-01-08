@@ -9,8 +9,8 @@
         $('.reply_comment').click(function() {
             $('.comment_form').hide();
             var commentid = $(this).data('commentid');
-            let comment_name = ".comment_form_id_" + commentid;
-            $(comment_name).show();
+            let comment_form_show = ".comment_form_id_" + commentid;
+            $(comment_form_show).show();
         });
 
         //comment create

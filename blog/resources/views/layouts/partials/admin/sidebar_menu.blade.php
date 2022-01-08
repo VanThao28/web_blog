@@ -25,12 +25,12 @@
             </li>
 
             <li>
-{{--                <a href="{{ route('admin.postIndex') }}">--}}
                     <a href="{{ route('admin.postIndex') }}">
                     <i class="fas fa-book"></i>
                     <span> Post </span>
                 </a>
             </li>
+
         </ul>
 
     </div>

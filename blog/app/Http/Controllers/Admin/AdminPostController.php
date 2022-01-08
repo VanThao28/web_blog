@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Validation;
 
@@ -32,6 +33,7 @@ class AdminPostController extends Controller
 
         $posts = $this->modelPost::with('user:id,name')
             ->orderby('id', 'desc')
+            ->where('is_delete',0)
             ->paginate(config('paginate.show'));
         return view('admin.post.index',[
             'posts'=>$posts,
@@ -55,8 +57,11 @@ class AdminPostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Post $post)
     {
+        if(!Gate::allows('add_post', $post)) {
+            abort(403);
+        }
         $request->validate([
             'title' => ['required','string', 'max:100'],
             'image_post' => ['required', 'mimes:jpeg,jpg,png','max:20000'],
@@ -125,8 +130,11 @@ class AdminPostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, Post $post)
     {
+        if(!Gate::allows('edit_post', $post)){
+            abort(403);
+        }
         $request->validate([
             'title' => ['required','string', 'max:200'],
             'image_post' => ['mimes:jpeg,jpg,png','max:20000'],
@@ -181,19 +189,17 @@ class AdminPostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy(Request $request, Post $post)
     {
+        if(!Gate::allows('delete_post', $post)) {
+            abort(403);
+        }
         $postId = (int) $request->post_id;
         $posts = $this->modelPost->findOrFail($postId);
-        try {
-            $posts->delete();
-        } catch (\Exception $e) {
-            \Log::error($e);
-            $error = 'delete post error';
-            return redirect()
-                ->route('admin.postIndex')
-                ->with('error', $error);
-        }
+        $data_delete = [
+            'is_delete'=>1,
+        ];
+        $posts->update($data_delete);
         return response()->json(['data'=>$posts]);
     }
     public function search(Request $request) {
@@ -208,15 +214,5 @@ class AdminPostController extends Controller
                ->paginate(config('paginate.show'));
        }
        return view('admin.post.index', ['posts' => $data]);
-    }
-    public function postSession(Request $request) {
-        $postId =(int) $request->post_id;
-        $data = [
-            'btn_edit_post' => [
-                'id' => $postId
-            ],
-        ];
-        session($data);
-        return json_encode($data);
     }
 }
