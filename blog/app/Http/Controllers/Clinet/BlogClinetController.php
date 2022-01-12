@@ -29,10 +29,9 @@ class BlogClinetController extends Controller
             'blog' =>$blog,
             ]);
     }
-    public function blogDetail(Request $request, $id) {
+    public function blogDetail($id) {
         $blog_detail = $this->modelPost::with('user:id,name')->findOrFail($id);
         $sum_comment = $this->modelComment->where('post_id',$id)->where('is_delete','=',0)->whereNull('parent_id')->count();
-       // dd($sum_comment);
         return view('clinet.single_blog', [
             'blog_detail' => $blog_detail,
             'sum_comment' => $sum_comment,

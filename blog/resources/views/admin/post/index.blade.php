@@ -6,21 +6,6 @@
             </div>
         </div>
     </div>
-
-    <div class="row md-5">
-        @if(session('msg'))
-            <div class="alert alert-success">
-                {{ session('msg') }}
-            </div>
-        @endif
-        @if(session('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }}
-            </div>
-        @endif
-    </div>
-
-    <!-- end row -->
     <div class="row">
         <div class="col-12">
             <div class="mt-1">
@@ -49,7 +34,6 @@
                                 <input type="text" tabindex="0">
                             </div>
                             <table id="key-table" class="table table-bordered dt-responsive nowrap dataTable no-footer dtr-inline" style="border-collapse: collapse; border-spacing: 0px; width: 100%; position: relative;" role="grid" aria-describedby="key-table_info">
-
                                 <thead>
                                 <tr role="row">
                                     <th class="sorting_asc" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 50px;" aria-sort="ascending" aria-label="Name: activate to sort column descending">Id</th>
@@ -68,9 +52,7 @@
                                     $id = (($posts->currentPage() - 1) * $posts->perPage()) +1;
                                 @endphp
                                 <tbody>
-
                                 @foreach($posts as $post)
-
                                     <tr role="row" class="odd">
                                         <td tabindex="0" class="sorting_1">{{$id}}</td>
                                         @php
@@ -110,13 +92,11 @@
                                             @if(Auth::user()->can('delete_post',$posts))
                                                 <button class="btn btn-icon btn-danger delete_val"
                                                         data-postId="{{ $post->id }}"
-    {{--                                                    data-url="{{ route('admin.DeletePost', ['id' => $post->id]) }}"--}}
                                                 > <i class="fas fa-trash-alt"></i>
                                                 </button>
                                             @endif
                                         </td>
                                     </tr>
-
                                 @endforeach
                                 </tbody>
                             </table>
@@ -135,10 +115,9 @@
         </div>
     </div>
                 {{--    create post--}}
-    @include('layouts.partials.admin.form-modal-post.modal_create_post_form')
+    @include('admin.post.form-modal-post.modal_create_post_form')
                 {{--    edit post--}}
-    @include('layouts.partials.admin.form-modal-post.modal_edit_post_form')
-
+    @include('admin.post.form-modal-post.modal_edit_post_form')
     @section('script')
         @include('layouts.partials.admin.js_admin')
     @endsection

@@ -6,8 +6,6 @@
             </div>
         </div>
     </div>
-
-    <!-- end row -->
     <div class="row">
         <div class="col-12">
             <div class="mt-1">
@@ -24,7 +22,6 @@
                                         {{ csrf_field() }}
                                         <input type="search" name="searchRole" class="form-control form-control-sm" placeholder="search..." aria-controls="key-table">
                                     </form>
-
                                 </label>
                             </div>
                         </div>
@@ -35,7 +32,6 @@
                                 <input type="text" tabindex="0">
                             </div>
                             <table id="key-table" class="table table-bordered dt-responsive nowrap dataTable no-footer dtr-inline" style="border-collapse: collapse; border-spacing: 0px; width: 100%; position: relative;" role="grid" aria-describedby="key-table_info">
-
                                 <thead>
                                 <tr role="row">
                                     <th class="sorting" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 121px;" aria-label="Position: activate to sort column ascending">Roles</th>
@@ -47,9 +43,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-
                                 @foreach($roles as $role)
-
                                     <tr role="row" class="odd">
                                         <td>{{$role->code}}</td>
                                         <td>
@@ -66,32 +60,25 @@
                                                 @endforeach
                                             @endif
                                         </td>
-                                            <td>
-                                                @if(Auth::user()->can('edit_role',$roles))
-                                                <button type="button" class="btn btn-icon btn-primary btn-modal-edit-role-permission-user"
+                                        <td>
+                                            @if(Auth::user()->can('edit_role',$roles))
+                                            <button type="button" class="btn btn-icon btn-primary btn-modal-edit-role-permission-user"
+                                                    data-roleId="{{$role->id}}"
+                                                    data-toggle="modal"
+                                                    data-target="#modal-edit-role-permission-user"
+                                            ><i class="fas fa-edit"></i> </button>
+                                            @endif
+                                            @if(Auth::user()->can('delete_role',$roles))
+                                            <button type="button" class="btn btn-icon btn-danger btn-delete-role-permission-user"
                                                         data-roleId="{{$role->id}}"
-                                                        data-toggle="modal"
-                                                        data-target="#modal-edit-role-permission-user"
-                                                ><i class="fas fa-edit"></i> </button>
+                                            > <i class="fas fa-trash-alt"></i>
+                                            </button>
                                                 @endif
-                                                @if(Auth::user()->can('delete_role',$roles))
-                                                <button type="button" class="btn btn-icon btn-danger btn-delete-role-permission-user"
-                                                            data-roleId="{{$role->id}}"
-                                                > <i class="fas fa-trash-alt"></i>
-                                                </button>
-                                                    @endif
-                                            </td>
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
                             </table>
-                        </div>
-                    </div>
-                    <div class="row justify-content-md-center">
-                        <div class="col-sm-12 col-md-4">
-                            <div class="dataTables_paginate paging_simple_numbers" id="key-table_paginate">
-{{--                                {{ $users->links('layouts.partials.my-pagination') }}--}}
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -100,10 +87,9 @@
         </div>
     </div>
 {{--    create role--}}
-    @include('layouts.partials.admin.form-modal-role.modal_create_role_form')
+    @include('admin.role.form-modal-role.modal_create_role_form')
 {{--    edit user--}}
-    @include('layouts.partials.admin.form-modal-role.modal_edit_role_form')
-
+    @include('admin.role.form-modal-role.modal_edit_role_form')
     @section('script')
         @include('layouts.partials.admin.js_admin')
     @endsection

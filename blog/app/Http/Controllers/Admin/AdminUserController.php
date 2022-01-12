@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Validation;
 
-
 use App\Models\User;
 use App\Models\Role;
 use App\Models\Permission;
@@ -134,12 +133,10 @@ class AdminUserController extends Controller
      */
     public function edit(Request $request)
     {
-
         $userId =(int) $request->user_id;
         $users = $this->modelUser::with('roles')->findOrFail($userId);
         return response()->json(['data'=>$users]);
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -173,11 +170,8 @@ class AdminUserController extends Controller
             'image_users' => $image_user,
             'password' => $input['password'],
         ];
-
-        //hash::make dùng mã hóa mật khẩu.
-        $file = $request->file('image_users'); // lỗi ko nhận được file image.
+        $file = $request->file('image_users');
         $data['password'] = Hash::make($data['password']);
-        // kiểm tra ngoại lệ
         try {
             if ($file) {
                 $file->store('public/users_image/');
@@ -192,7 +186,6 @@ class AdminUserController extends Controller
         $user_id = $users->id;
         $user_role = $this->modelUserRole->where('user_id',$user_id)->where('is_delete',0)->get();
         foreach($user_role as $value){
-
            $delUserRole = $this->modelUserRole->find($value->id);
            $delUserRole->delete();
         }

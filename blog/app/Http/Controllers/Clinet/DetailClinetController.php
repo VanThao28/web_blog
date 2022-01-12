@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\clinet;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
 use App\Models\Post;
 use App\Models\User;
-use App\Models\Comment;
 
 class DetailClinetController extends Controller
 {
@@ -21,8 +19,6 @@ class DetailClinetController extends Controller
     }
     public function detail($id) {
         $posts =$this->modelPost->find($id);
-
-        //lấy data của post trỏ đến model user và lấy 1 giá trị
         $name_post = $posts->user()->first();
        return view('clinet.details', [
            'post' => $posts,
