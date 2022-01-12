@@ -205,6 +205,7 @@ class AdminPostController extends Controller
     public function search(Request $request) {
        if ($request->isMethod('post'))
        {
+           $users = $this->modelUser->get();
            $key = $request->input('searchPost');
            $data = $this->modelPost
                ->where('title', 'like', '%'. $key . '%')
@@ -213,6 +214,6 @@ class AdminPostController extends Controller
                ->select('posts.*', 'users.name')
                ->paginate(config('paginate.show'));
        }
-       return view('admin.post.index', ['posts' => $data]);
+       return view('admin.post.index', ['posts' => $data, 'users'=> $users]);
     }
 }

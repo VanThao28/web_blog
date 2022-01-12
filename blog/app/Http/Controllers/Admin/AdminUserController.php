@@ -11,6 +11,9 @@ use Validation;
 
 
 use App\Models\User;
+use App\Models\Role;
+use App\Models\Permission;
+use App\Models\UserRole;
 
 class AdminUserController extends Controller
 {
@@ -20,19 +23,24 @@ class AdminUserController extends Controller
      * @return \Illuminate\Http\Response
      */
     protected $modelUser;
+    protected $modelRole;
+    protected $modelUserRole;
 
-    public function __construct(User $user)
+    public function __construct(User $user, Role $role, UserRole $userRole)
     {
         $this->modelUser = $user;
+        $this->modelRole = $role;
+        $this->modelUserRole = $userRole;
     }
     public function index()
     {
+        $roles = $this->modelRole->where('is_delete',0)->get();
         //lấy data user,sắp xếp từ cao đền thấp, hiển thị giá trị trang
-        $users = $this->modelUser
+        $users = $this->modelUser::with('roles')
             ->orderby('id', 'desc')
             ->where('is_delete',0)
             ->paginate(config('paginate.show'));
-        return view('admin.users.index', ['users' => $users]);
+        return view('admin.users.index', ['users' => $users,'roles' => $roles]);
     }
 
     /**
@@ -62,11 +70,10 @@ class AdminUserController extends Controller
             'image_users' =>['required','mimes:jpeg,jpg,png','max:20000'],
             'password' => ['required', Rules\Password::defaults()],
         ]);
-
-
         $input = $request->only([
             'name',
             'email',
+            'role_check',
             'image_users',
             'password',
         ]);
@@ -78,17 +85,31 @@ class AdminUserController extends Controller
         ];
         $data['password'] = Hash::make($data['password']);
         $file = $request->file('image_users');
-        // kiểm tra ngoại lệ
-
         try {
             if ($file) {
                 $file->store('public/users_image/');
                 $data['image_name'] = $file->getClientOriginalName();
                 $data['image_users'] = $file->hashName();
             }
-            $this->modelUser->create($data);
+           $users =  $this->modelUser->create($data);
         } catch (\Exception $e) {
             \Log::error($e);
+        }
+        $userId = $users->id;
+        if(count($input['role_check']) > 0){
+            foreach($input['role_check'] as $key){
+                $data_create_userRole = [
+                    'role_id' => (int) $key,
+                    'user_id' =>$userId,
+                ];
+                $userRoles = $this->modelUserRole
+                    ->where('role_id', '=', $data_create_userRole['role_id'])
+                    ->where('user_id', '=', $data_create_userRole['user_id'])
+                    ->first();
+                if (empty($userRoles)) {
+                    $this->modelUserRole->create($data_create_userRole);
+                }
+            }
         }
         return response()->json(['success' =>'success user']);
 
@@ -115,7 +136,7 @@ class AdminUserController extends Controller
     {
 
         $userId =(int) $request->user_id;
-        $users = $this->modelUser->findOrFail($userId);
+        $users = $this->modelUser::with('roles')->findOrFail($userId);
         return response()->json(['data'=>$users]);
     }
 
@@ -140,11 +161,11 @@ class AdminUserController extends Controller
         $input = $request->only([
             'name',
             'email',
+            'role_edit_check',
             'image_users',
             'password',
         ]);
         $users = $this->modelUser->find($request->user_id);
-
         $image_user = empty($input['image_users']) ? $users->image_users : $input['image_users'];
         $data = [
             'name' => $input['name'],
@@ -167,6 +188,30 @@ class AdminUserController extends Controller
             $users->update($data);
         } catch (\Exception $e) {
             \Log::error($e);
+        }
+        $user_id = $users->id;
+        $user_role = $this->modelUserRole->where('user_id',$user_id)->where('is_delete',0)->get();
+        foreach($user_role as $value){
+
+           $delUserRole = $this->modelUserRole->find($value->id);
+           $delUserRole->delete();
+        }
+
+        if(count($input['role_edit_check']) > 0){
+            foreach($input['role_edit_check'] as $key){
+                $data_edit_userRole = [
+                    'role_id' => (int) $key,
+                    'user_id' =>$user_id,
+                ];
+
+                $userRoles = $this->modelUserRole
+                    ->where('role_id', '=', $data_edit_userRole['role_id'])
+                    ->where('user_id', '=', $data_edit_userRole['user_id'])
+                    ->first();
+                if (empty($userRoles)) {
+                    $this->modelUserRole->create($data_edit_userRole);
+                }
+            }
         }
         return response()->json(['success'=>'success update user']);
     }

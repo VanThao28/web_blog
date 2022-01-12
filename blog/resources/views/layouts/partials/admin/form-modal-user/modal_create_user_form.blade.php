@@ -29,6 +29,31 @@
                             <span class="text-danger" id="emailError"></span>
                         </div>
                     </div>
+                    <div class="form-group row  mb-3">
+                        <label class="col-md-3" for="exampleInputEmail1">Role</label>
+                        <div class="col-md-9">
+                            <div class="mb-4">
+                                <div class="checkbox checkbox-success">
+                                    <input id="checkbox_role_all" type="checkbox">
+                                    <label for="checkbox_role_all">
+                                        ALL
+                                    </label>
+                                </div>
+                            </div>
+                            @foreach($roles as $key_role)
+                                <div class="mb-4">
+                                    <div class="checkbox checkbox-success checkBoxRole">
+                                        <input class="check_role" id="check_box_role_{{$key_role->id}}" type="checkbox" data-role="{{$key_role->id}}" value="{{ $key_role->id }}" name="role_check[{{$key_role->id}}]">
+                                        <label for="check_box_role_{{$key_role->id}}">
+                                            {{$key_role->code}}
+                                        </label>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+
+                    </div>
+
 
                     <div class="form-group row  mb-3" name="image_users">
                         <label class="col-md-3 col-form-label">Upload</label>

@@ -25,9 +25,16 @@
             </li>
 
             <li>
-                    <a href="{{ route('admin.postIndex') }}">
+                <a href="{{ route('admin.postIndex') }}">
                     <i class="fas fa-book"></i>
                     <span> Post </span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ route('admin.roleIndex') }}">
+                    <i class="fas fa-door-open"></i>
+                    <span> Role </span>
                 </a>
             </li>
 

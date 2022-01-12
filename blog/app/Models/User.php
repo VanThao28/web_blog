@@ -67,7 +67,7 @@ class User extends Authenticatable
     }
     public function hasPremissionTo($permission)
     {
-        return $this->hasPermissionThroughRole($permission) || $this->hasPermission($permission);
+        return $this->hasPermissionThroughRole($permission);
     }
     public function hasPermissionThroughRole($permission)
     {
@@ -88,13 +88,10 @@ class User extends Authenticatable
         return false;
     }
     public function roles() {
-        return $this->belongsToMany(Role::class,'role_user','users_id','role_id');
+        return $this->belongsToMany(Role::class,'user_roles');
     }
-    public function permission() {
+    public function permissions() {
         return $this->belongsToMany(Permission::class,'user_permission');
-    }
-    protected  function hasPermission ($permission) {
-        return (bool) $this->permission->where('code', $permission->code)->count();
     }
     public function getAllPermissions(array $permissions)
     {

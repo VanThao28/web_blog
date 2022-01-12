@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 /* Admin*/
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AdminPostController;
+use App\Http\Controllers\Admin\AdminRoleController;
 use App\Http\Controllers\Clinet\CommentPost;
 
 /*end Admin*/
@@ -61,6 +62,14 @@ Route::name('admin')->prefix('admin')->middleware(['auth'])->group(function (){
 
         //seach post
         Route::post('/search_post',[AdminPostController::class, 'search'])->name('.searchPost');
+
+        Route::get('/role/index', [AdminRoleController::class, 'index'])->name('.roleIndex');
+        Route::post('/role/create', [AdminRoleController::class, 'store'])->name('.roleCreate');
+        Route::post('role/edit',[AdminRoleController::class,'edit'])->name('.roleEdit');
+        Route::post('/role/update', [AdminRoleController::class, 'update'])->name('.roleUpdate');
+        Route::post('/role/delete', [AdminRoleController::class, 'destroy'])->name('.roleDelete');
+        Route::post('/search_role',[AdminRoleController::class, 'searchRole'])->name('.searchRole');
+        Route::post('/permission_role',[AdminRoleController::class, 'permissionUserAdd'])->name('.permissionUserAdd');
 
         Route::get('clinet/single_blog/{id}', [BlogClinetController::class, 'blogDetail'])->name('clinet.single_blog');
 

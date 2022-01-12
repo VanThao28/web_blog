@@ -33,7 +33,7 @@ class AuthServiceProvider extends ServiceProvider
         try{
             Permission::get()->map(function(Permission $permission){
                 Gate::define($permission->code, function (User $user) use ($permission){
-                    return $user->hasPremissionTo($permission);
+                    return $user-> hasPermissionThroughRole($permission);
                 });
             });
         } catch (\Exception $e) {
