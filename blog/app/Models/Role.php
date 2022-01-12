@@ -13,7 +13,6 @@ class Role extends Model
         'full_name',
         'is_delete',
     ];
-
     public function users(){
         return $this->belongsToMany(User::class,'user_roles');
     }

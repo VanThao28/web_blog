@@ -39,6 +39,7 @@ class AdminRoleController extends Controller
         $users = $this->modelUser->where('is_delete',0)->get();
         $roles = $this->modelRole::with('users', 'permissions')
                     ->where('is_delete',0)
+                    ->orderby('id','desc')
                     ->get();
         return view('admin.role.role_index',['permission' => $permissions, 'user'=>$users, 'roles'=>$roles]);
     }

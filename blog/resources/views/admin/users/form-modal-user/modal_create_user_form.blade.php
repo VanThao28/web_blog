@@ -1,19 +1,15 @@
 <div class="modal fade" id="modal_create_user" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Create User</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-
             <div class="modal-body" >
-
                 <form METHOD="post" enctype="multipart/form-data" id="form_user_create">
                     @csrf
-
                     <div class="form-group row">
                         <label class="col-md-3" for="exampleInputEmail1">Name</label>
                         <div class="col-md-9">
@@ -21,7 +17,6 @@
                             <span class="text-danger" id="nameError"></span>
                         </div>
                     </div>
-
                     <div class="form-group row">
                         <label class="col-md-3" for="exampleInputEmail1">Email address</label>
                         <div class="col-md-9">
@@ -51,10 +46,7 @@
                                 </div>
                             @endforeach
                         </div>
-
                     </div>
-
-
                     <div class="form-group row  mb-3" name="image_users">
                         <label class="col-md-3 col-form-label">Upload</label>
                         <div class="col-md-9">
@@ -62,7 +54,6 @@
                             <img id="output"/>
                             <br><span class="text-danger" id="image_usersError"></span>
                         </div>
-
                     </div>
                     <div class="form-group row">
                         <label class="col-md-3" for="exampleInputPassword1">Password</label>

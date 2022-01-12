@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Validation;
 
-
 use App\Models\Post;
 use App\Models\User;
 
@@ -30,7 +29,6 @@ class AdminPostController extends Controller
     public function index()
     {
         $users = $this->modelUser->get();
-
         $posts = $this->modelPost::with('user:id,name')
             ->orderby('id', 'desc')
             ->where('is_delete',0)
@@ -69,7 +67,6 @@ class AdminPostController extends Controller
             'contents' => ['required','max:5000'],
             'is_public' => 'required',
         ]);
-
         $input = $request->only([
             'title',
             'image_post',
@@ -79,7 +76,6 @@ class AdminPostController extends Controller
             'contents',
             'is_public',
         ]);
-
         $data = [
             'title' => $input['title'],
             'formData' => $input['image_post'],
@@ -101,15 +97,9 @@ class AdminPostController extends Controller
 
         } catch (\Exception $e) {
             \Log::error($e);
-            $error = 'update post error';
-            return redirect()
-                ->route('admin.postIndex')
-                ->with('error', $error);
-
          }
         return response()->json(['success'=>'success post']);
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -151,9 +141,7 @@ class AdminPostController extends Controller
             'is_public',
         ]);
         $posts = $this->modelPost->find($request->post_id);
-
         $image_post  = empty($input['image_post']) ? $posts->image_post : $input['image_post'];
-
         $data= [
             'title' => $input['title'],
             'image_post' => $image_post,
@@ -175,10 +163,6 @@ class AdminPostController extends Controller
             $posts->update($data);
         } catch (\Exception $e) {
             \Log::error($e);
-            $error = 'update post error';
-            return redirect()
-                ->route('admin.postIndex')
-                ->with('error', $error);
         }
         return response()->json(['success'=>'success update post']);
     }

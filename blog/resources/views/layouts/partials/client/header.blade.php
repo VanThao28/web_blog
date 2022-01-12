@@ -52,23 +52,9 @@
                             <nav>
                                 <ul id="navigation">
                                     <li><a href="{{ route('index.clinet') }}">Home</a></li>
-                                    <li><a href="{{ route('clinet.categori') }}">Category</a></li>
-                                    <li><a href="{{ route('about') }}">About</a></li>
-                                    <li><a href="{{route('clinet.contact')}}">Contact</a></li>
                                     <li><a href="{{route('clinet.blog')}}">Blog</a></li>
                                 </ul>
                             </nav>
-                        </div>
-                    </div>
-                    <div class="col-xl-2 col-lg-2 col-md-4">
-                        <div class="header-right-btn f-right d-none d-lg-block">
-                            <i class="fas fa-search special-tag"></i>
-                            <div class="search-box">
-                                <form action="#">
-                                    <input type="text" placeholder="Search">
-
-                                </form>
-                            </div>
                         </div>
                     </div>
                     <!-- Mobile Menu -->

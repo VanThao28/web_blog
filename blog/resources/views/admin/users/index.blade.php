@@ -6,16 +6,6 @@
             </div>
         </div>
     </div>
-
-    <div class="row md-5">
-        @if(session('error'))
-          <div class="alert alert-danger">
-              {{ session('error') }}
-          </div>
-        @endif
-    </div>
-
-    <!-- end row -->
     <div class="row">
         <div class="col-12">
             <div class="mt-1">
@@ -43,7 +33,6 @@
                                 <input type="text" tabindex="0">
                             </div>
                             <table id="key-table" class="table table-bordered dt-responsive nowrap dataTable no-footer dtr-inline" style="border-collapse: collapse; border-spacing: 0px; width: 100%; position: relative;" role="grid" aria-describedby="key-table_info">
-
                                 <thead>
                                 <tr role="row">
                                     <th class="sorting_asc" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 50px;" aria-sort="ascending" aria-label="Name: activate to sort column descending">Id</th>
@@ -59,9 +48,7 @@
                                     $id = (($users->currentPage() - 1) * $users->perPage()) +1;
                                 @endphp
                                 <tbody>
-
                                 @foreach($users as $user)
-
                                     <tr role="row" class="odd">
                                         <td tabindex="0" class="sorting_1">{{$id}}</td>
                                         @php
@@ -94,7 +81,6 @@
                                             @endif
                                         </td>
                                     </tr>
-
                                 @endforeach
                                 </tbody>
                             </table>
@@ -113,10 +99,9 @@
         </div>
     </div>
             {{--create user--}}
-    @include('layouts.partials.admin.form-modal-user.modal_create_user_form')
+    @include('admin.users.form-modal-user.modal_create_user_form')
             {{--    edit user--}}
-    @include('layouts.partials.admin.form-modal-user.modal_edit_user_form')
-
+    @include('admin.users.form-modal-user.modal_edit_user_form')
     @section('script')
         @include('layouts.partials.admin.js_admin')
     @endsection

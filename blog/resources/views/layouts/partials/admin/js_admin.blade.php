@@ -4,7 +4,6 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-    //user
     $(document).ready(function(){
         //save user
         $('#form_user_create').on('submit', function(e){
@@ -18,7 +17,6 @@
                 confirmButtonText: 'Save',
                 denyButtonText: `Don't save`,
             }).then((result) => {
-                /* Read more about isConfirmed, isDenied below */
                 if (result.isConfirmed) {
                     $.ajax({
                         url: '{{ route('admin.StoreUser') }}',
@@ -53,9 +51,6 @@
                 }
             })
         });
-
-        //end create user
-
         //edit user
         $('.btn-modal-edit-user').click(function (){
            var user_id = $(this).data('userid');
@@ -82,8 +77,6 @@
                }
            });
         });
-        //end edit user
-
         // update user
         $('#button_update_user').on('click', function (e) {
             e.preventDefault();
@@ -134,8 +127,6 @@
                 }
             })
         });
-        //end update user
-
         //delete user
         $('.btn-delete-user').click(function(e){
             e.preventDefault();
@@ -170,10 +161,7 @@
                 }
             })
         });
-        //end delete user
     });
-    //end user
-
     // post
     $(document).ready(function () {
         // save post
@@ -225,7 +213,6 @@
                 }
             });
         });
-        //end create post
         //edit post
         $('.btn_edit_post').click(function (e) {
             e.preventDefault();
@@ -256,8 +243,6 @@
 
             });
         });
-        //end edit post
-
         //update post
         $('#button_edit_post').on('click', function (e) {
             e.preventDefault();
@@ -288,7 +273,6 @@
                                     window.location.href = '{{ route('admin.postIndex') }}';
                                 }
                             });
-
                         },
                         error: function(data){
                             $('#title_error').addClass('d-none');
@@ -310,10 +294,7 @@
                 }
             })
         });
-        //end update
-
         //delete post
-
         $('.delete_val').on('click', function (e){
            e.preventDefault();
             var post_id = $(this).data('postid');
@@ -351,8 +332,6 @@
             })
         });
     });
-    //end post
-
     //upload anh
         var loadFile = function(event) {
         var output = document.getElementById('output');
@@ -387,7 +366,7 @@
             $('#checkboxAll').prop('checked', false);
         }
     });
-    //check all edit permission_role_user
+    //check all edit permission_role
     $('#check_box_permission_edit_all').click(function(event) {
         if(this.checked) {
             // Iterate each checkbox
@@ -413,7 +392,7 @@
             $('#check_box_permission_edit_all').prop('checked', false);
         }
     });
-    //checked user
+    //checked role
     $('#checkbox_role_all').click(function(event) {
         if(this.checked) {
             $('.check_role').each(function() {
@@ -580,7 +559,6 @@
                     $('#modal-edit-role-permission-user').find('#role_id').val(data.data.id);
                     $('#modal-edit-role-permission-user').find('#input_code_role').val(data.data.code);
                     $('#modal-edit-role-permission-user').find('#input_full_name_role').val(data.data.full_name);
-
                     for(let i=0; i<data.data.permissions.length;i++){
                        array.push(data.data.permissions[i].id);
                     }

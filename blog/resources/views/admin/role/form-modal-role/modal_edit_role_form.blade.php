@@ -1,16 +1,13 @@
 <div class="modal fade" id="modal-edit-role-permission-user" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Edit Role Permission</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-
             <div class="modal-body" >
-
                 <form METHOD="post" enctype="multipart/form-data" id="form_role_permission_edit">
                     @csrf
                     <input type="hidden" name="role_id" id="role_id">
@@ -22,7 +19,6 @@
                                 <input type="text" class="form-control" id="input_code_role" name="code_role" required placeholder="Enter code">
                             </div>
                         </div>
-
                         <div class="form-group row">
                             <label class="col-md-3" for="exampleInputEmail1">Full name</label>
                             <div class="col-md-9">

@@ -21,41 +21,32 @@ class IndexClinetController extends Controller
     }
     public function index()
     {
-        //hien thi post tren trang index clinet
         $posts = $this->modelPost
                 ->orderby('id','desc')
                 ->where('is_public',1)
                 ->get();
-
-        //hien thi data tren top trending
         $top_trending= $this->modelPost
             ->orderby('id','desc')
             ->where('is_public',1)
             ->first();
-
         $right_trending = $this->modelPost
-            ->inRandomOrder('id')// order by random
+            ->inRandomOrder('id')
             ->where('is_public',1)
             ->limit(4)
             ->get();
-
-        //hien thi data tren button trending
         $button_trending= $this->modelPost
             ->where('is_public',1)
             ->limit(3)
             ->get();
-
         $tab_content = $this->modelPost
             ->inRandomOrder('id')
             ->where('is_public', 1)
             ->limit(4)
             ->get();
-
         $section_tile = $this->modelPost
             ->where('is_public','1')
             ->limit(5)
             ->get();
-
         return view('clinet.index',[
             'posts' => $posts,
             'top_trending' =>$top_trending,

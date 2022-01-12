@@ -15,16 +15,14 @@
                         <label class="col-md-3 col-form-label" for="exampleInputEmail1">Name</label>
                         <div class="col-md-9">
                             <input type="text" class="form-control" id="name" name="name" required placeholder="Enter name">
-                            <strong class="text-danger" id="edit_name_error"></strong>
+                            <span class="text-danger" id="edit_name_error"></span>
                         </div>
                     </div>
-
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label" for="exampleInputEmail1">Email address</label>
                         <div class="col-md-9">
                             <input type="email" class="form-control" id="email" name="email" required placeholder="Enter email">
-                            {{--message validation--}}
-                            <strong class="text-danger" id="edit_email_error"></strong>
+                            <span class="text-danger" id="edit_email_error"></span>
                         </div>
                     </div>
                     <div class="form-group row  mb-3">
@@ -49,9 +47,7 @@
                                 </div>
                             @endforeach
                         </div>
-
                     </div>
-
                     <div class="form-group row  mb-3" name="image_users">
                         <label class="col-md-3 col-form-label">Upload</label>
                         <div class="col-md-9">
@@ -60,16 +56,13 @@
                             <strong class="text-danger" id="edit_image_users_error"></strong>
                         </div>
                     </div>
-
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label" for="exampleInputPassword1">Password</label>
                         <div class="col-md-9">
                             <input type="password" class="form-control" id="password" name="password" required autocomplete="current-password" placeholder="Password">
-                            {{--message validation--}}
-                            <strong class="text-danger" id="edit_password_error"></strong>
+                            <span class="text-danger" id="edit_password_error"></span>
                         </div>
                     </div>
-
                     <button type="submit" class="btn btn-primary" id="button_update_user">Submit</button>
                 </form>
             </div>

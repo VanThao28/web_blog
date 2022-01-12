@@ -1,5 +1,5 @@
 <div class="modal fade" id="modal_edit_post" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">Edit Post</h5>
@@ -15,20 +15,17 @@
                         <label class="col-md-2 col-form-label" for="example-textarea">Text Title</label>
                         <div class="col-md-10">
                             <textarea class="form-control" rows="5" id="title_post" name="title" required ></textarea>
-
-                            <strong class="text-danger" id="title_error"></strong>
+                            <span class="text-danger" id="title_error"></span>
                         </div>
                     </div>
-
                     <div class="form-group row  mb-3">
                         <label class="col-md-2 col-form-label">Upload</label>
                         <div class="col-md-10">
                             <input type="file" accept="image/*" name="image_post" id="image_post" onchange="loadFile(event)">
                             <img id="output"/>
-                            <br><strong class="text-danger" id="image_post_error"></strong>
+                            <br><span class="text-danger" id="image_post_error"></span>
                         </div>
                     </div>
-
                     <div class="form-group row">
                         <label class="col-md-2 col-form-label">Poster</label>
                         <div class="col-md-10">
@@ -40,26 +37,20 @@
                             </select>
                         </div>
                     </div>
-
                     <div class="form-group row mb-3">
                         <label class="col-md-2 col-form-label" for=" exampleInputEmail1">Topic</label>
                         <div class="col-md-10">
                             <input type="text" class="form-control" id="topic_post" name="topic" required>
-
-                            <strong class="text-danger" id="topic_error"></strong>
+                            <span class="text-danger" id="topic_error"></span>
                         </div>
                     </div>
-
                     <div class="form-group row">
                         <label class="col-md-2 col-form-label" for="example-textarea">Text Content</label>
                         <div class="col-md-10">
                             <textarea class="form-control" rows="5" id="content_post" name="contents" required ></textarea>
-
                             <strong class="text-danger" id="contents_error"></strong>
                         </div>
                     </div>
-
-
                     <div class="radio radio-success">
                         <input type="radio" name="is_public" id="is_public_true" value="1"
                             @if(@$post->is_public == 1)
@@ -78,9 +69,7 @@
                         <label for="is_public_flase">
                             ẩn
                         </label>
-
                     </div>
-
                     <button type="button" class="btn btn-primary" id="button_edit_post">Submit</button>
                 </form>
             </div>
