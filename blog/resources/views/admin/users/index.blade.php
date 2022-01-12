@@ -21,7 +21,7 @@
             <div class="mt-1">
                 <div id="key-table_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
                     @if(Auth::user()->can('add_user', $users))
-                        <button class="btn btn-icon btn-success" data-toggle="modal" data-target="#modal_create_user" > <i class="fas fa-plus"></i> </button>
+                        <button class="btn btn-icon btn-success " data-toggle="modal" data-target="#modal_create_user" > <i class="fas fa-plus"></i> </button>
                     @endif
                     <div class="row">
                         <div class="col-sm-12 col-md-6">
@@ -50,6 +50,7 @@
                                     <th class="sorting" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 50px; align-items: center" aria-label="Office: activate to sort column ascending">Image</th>
                                     <th class="sorting" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 256px;" aria-label="Position: activate to sort column ascending">Name</th>
                                     <th class="sorting" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 121px;" aria-label="Office: activate to sort column ascending">Email</th>
+                                    <th class="sorting" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 121px;" aria-label="Office: activate to sort column ascending">Role</th>
                                     <th class="sorting" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 121px;" aria-label="Office: activate to sort column ascending">Create Date</th>
                                     <th class="sorting" tabindex="0" aria-controls="key-table" rowspan="1" colspan="1" style="width: 57px;" aria-label="Age: activate to sort column ascending">Setting</th>
                                 </tr>
@@ -69,6 +70,13 @@
                                         <td><img src="{{ ShowImageUsers($user->image_users) }}" title="contact-img" class="rounded-circle avatar-sm" alt="{{$user->image_name}}"></td>
                                         <td>{{$user->name}}</td>
                                         <td>{{$user->email}}</td>
+                                        <td>
+                                            @if(count($user->roles)>0)
+                                                @foreach($user->roles as $role)
+                                                    <span class="badge badge-success">{{ $role->code }}</span>
+                                                @endforeach
+                                            @endif
+                                        </td>
                                         <td>{{$user->created_at}}</td>
                                         <td>
                                             @if(Auth::user()->can('edit_user', $users))

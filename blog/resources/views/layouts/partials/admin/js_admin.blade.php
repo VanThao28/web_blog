@@ -59,6 +59,7 @@
         //edit user
         $('.btn-modal-edit-user').click(function (){
            var user_id = $(this).data('userid');
+           var array = [];
            $.ajax({
                url: '{{ route('admin.EditUser') }}',
                type: 'post',
@@ -70,6 +71,14 @@
                   $('#modal_edit_user').find('#email').val(data.data.email);
                   $('#modal_edit_user').find('#image_users').html(data.data.image_users);
                   $('#modal_edit_user').find('#password').html(data.data.password);
+                   for(let i=0; i<data.data.roles.length;i++){
+                       array.push(data.data.roles[i].id);
+                   }
+                   $('.check_role_edit').each(function () {
+                       if(array.includes(parseInt($(this).val()))){
+                           $(this).prop('checked',true);
+                       }
+                   });
                }
            });
         });
@@ -221,7 +230,6 @@
         $('.btn_edit_post').click(function (e) {
             e.preventDefault();
             var post_id = $(this).data('postid');
-
             $.ajax({
                 method: 'POST',
                 url: '{{ route("admin.EditPost")}}',
@@ -353,5 +361,271 @@
         URL.revokeObjectURL(output.src) // free memory
          }
     };
+    //check add permission_role_user
+    $('#checkboxAll').click(function(event) {
+        if(this.checked) {
+            // Iterate each checkbox
+            $('.check_permission').each(function() {
+                this.checked = true;
+            });
+        } else {
+            $('.check_permission').each(function() {
+                this.checked = false;
+            });
+        }
+    });
+    $('.checkBoxPermission').on('click',function() {
+        var permissionid = $(this).data('permissionid');
+        if($('.checkBoxPermission').find(permissionid)) {
+            $(name).prop('checked', true);
+        } else {
+            $(name).prop('checked', false);
+        }
+        if($('.check_permission:checkbox:not(:checked)').length == 0){
+            $('#checkboxAll').prop('checked', true);
+        }else{
+            $('#checkboxAll').prop('checked', false);
+        }
+    });
+    //check all edit permission_role_user
+    $('#check_box_permission_edit_all').click(function(event) {
+        if(this.checked) {
+            // Iterate each checkbox
+            $('.check_box_permission_edit').each(function() {
+                this.checked = true;
+            });
+        } else {
+            $('.check_box_permission_edit').each(function() {
+                this.checked = false;
+            });
+        }
+    });
+    $('.checkBoxPermissionEdit').on('click',function() {
+        var permissionid = $(this).data('permission');
+        if($('.checkBoxPermissionEdit').find(permissionid)) {
+            $(name).prop('checked', true);
+        } else {
+            $(name).prop('checked', false);
+        }
+        if($('.check_box_permission_edit:checkbox:not(:checked)').length == 0){
+            $('#check_box_permission_edit_all').prop('checked', true);
+        }else{
+            $('#check_box_permission_edit_all').prop('checked', false);
+        }
+    });
+    //checked user
+    $('#checkbox_role_all').click(function(event) {
+        if(this.checked) {
+            $('.check_role').each(function() {
+                this.checked = true;
+            });
+        } else {
+            $('.check_role').each(function() {
+                this.checked = false;
+            });
+        }
+    });
+    $('.checkBoxRole').on('click',function() {
+        var userid = $(this).data('userid');
+        if($('.checkBoxRole').find(userid)) {
+            $(name).prop('checked', true);
+        } else {
+            $(name).prop('checked', false);
+        }
+        if($('.check_role:checkbox:not(:checked)').length == 0){
+            $('#checkbox_role_all').prop('checked', true);
+        }else{
+            $('#checkbox_role_all').prop('checked', false);
+        }
+    });
+    $('#checkbox_role_edit_all').click(function(event) {
+        if(this.checked) {
+            $('.check_role_edit').each(function() {
+                this.checked = true;
+            });
+        } else {
+            $('.check_role_edit').each(function() {
+                this.checked = false;
+            });
+        }
+    });
+    $('.checkBoxRoleEdit').on('click',function() {
+        var userid = $(this).data('userid');
+        if($('.checkBoxRoleEdit').find(userid)) {
+            $(name).prop('checked', true);
+        } else {
+            $(name).prop('checked', false);
+        }
+        if($('.check_role_edit:checkbox:not(:checked)').length == 0){
+            $('#checkbox_role_edit_all').prop('checked', true);
+        }else{
+            $('#checkbox_role_edit_all').prop('checked', false);
+        }
+    });
+    $(document).ready(function (){
+        $('#form_role_create').on('submit', function (e){
+            e.preventDefault();
+            var form = $('#form_role_create')[0];
+            var formData = new FormData(form);
+            Swal.fire({
+                title: 'do you want to save?',
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: 'Save',
+                denyButtonText: `Don't save`,
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '{{route('admin.roleCreate')}}',
+                        type: 'POST',
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function (data) {
+                            Swal.fire('create role success', '', 'success').then((result) =>{
+                                if(result.isConfirmed){
+                                    window.location.href = '{{ route('admin.roleIndex') }}';
+                                }
+                            });
+                        },
+                    });
+                } else if (result.isDenied) {
+                    Swal.fire('Changes are not saved', '', 'info');
+                }
+            });
+        });
+        $('#form_role_permission_create').on('submit',function(e){
+            e.preventDefault();
+            var form = $('#form_role_permission_create')[0];
+            console.log(form);
+            var formData = new FormData(form);
+            Swal.fire({
+                title: 'do you want to save?',
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: 'Save',
+                denyButtonText: `Don't save`,
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '{{route('admin.permissionUserAdd')}}',
+                        type: 'POST',
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function (data) {
+                            Swal.fire('create role success', '', 'success').then((result) =>{
+                                if(result.isConfirmed){
+                                    window.location.href = '{{ route('admin.roleIndex') }}';
+                                }
+                            });
+                        },
+                    });
+                } else if (result.isDenied) {
+                    Swal.fire('Changes are not saved', '', 'info');
+                }
+            });
+        });
+        $('.btn-delete-role-permission-user').on('click', function (e){
+            e.preventDefault();
+            var role_id = $(this).data('roleid');
+            console.log(role_id);
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        method: 'POST',
+                        url: '{{ route('admin.roleDelete') }}',
+                        data: {
+                            role_id : role_id,
+                        },
+                        dataType: 'json',
+                        success: function(data){
+                            Swal.fire(
+                                'Deleted!',
+                                'Your file has been deleted.',
+                                'success',
+                            ).then((result) =>{
+                                if (result.isConfirmed) {
+                                    window.location.href= '{{ route("admin.roleIndex") }}';
+                                }
+                            });
+                        }
+                    });
+                }
+            })
+        });
+        $('.btn-modal-edit-role-permission-user').on('click',function (e) {
+            e.preventDefault();
+            var role_id = $(this).data('roleid');
+            var array = [];
+            $.ajax({
+                method: 'POST',
+                url: '{{ route("admin.roleEdit")}}',
+                data: {
+                    role_id:role_id,
+                },
+                dataType: 'json',
+                success: function (data){
+                    $('#modal-edit-role-permission-user') == data;
+                    $('#modal-edit-role-permission-user').find('#role_id').val(data.data.id);
+                    $('#modal-edit-role-permission-user').find('#input_code_role').val(data.data.code);
+                    $('#modal-edit-role-permission-user').find('#input_full_name_role').val(data.data.full_name);
 
+                    for(let i=0; i<data.data.permissions.length;i++){
+                       array.push(data.data.permissions[i].id);
+                    }
+                    $('.check_box_permission_edit').each(function () {
+                        if(array.includes(parseInt($(this).val()))){
+                            $(this).prop('checked',true);
+                        }
+                    });
+                },
+
+            });
+        });
+        $('#button_edit_role').on('click', function (e) {
+            e.preventDefault();
+            var form = $('#form_role_permission_edit')[0];
+            var formData = new FormData(form);
+            Swal.fire({
+                title: 'Do you want to update the post?',
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: 'Update',
+                denyButtonText: `Don't update`,
+                timer: 1500,
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    $.ajax({
+                        method: 'POST',
+                        url: '{{ route("admin.roleUpdate") }}',
+                        data: formData,
+                        dataType: 'json',
+                        contentType: false,
+                        processData: false,
+                        success: function (data){
+                            Swal.fire('Update!', '', 'success').then((result) =>{
+                                if(result.isConfirmed) {
+                                    window.location.href = '{{ route('admin.roleIndex') }}';
+                                }
+                            });
+                        },
+                    });
+                } else if (result.isDenied) {
+                    Swal.fire('Changes are not update', '', 'info')
+                }
+            })
+        });
+    });
 </script>
