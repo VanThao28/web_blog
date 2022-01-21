@@ -28,7 +28,7 @@ class AdminPostController extends Controller
 
     public function index()
     {
-        $users = $this->modelUser->get();
+        $users = $this->modelUser->where('is_delete','=',0)->get();
         $posts = $this->modelPost::with('user:id,name')
             ->orderby('id', 'desc')
             ->where('is_delete',0)

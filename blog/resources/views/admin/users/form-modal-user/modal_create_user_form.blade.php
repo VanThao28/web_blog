@@ -51,7 +51,7 @@
                         <label class="col-md-3 col-form-label">Upload</label>
                         <div class="col-md-9">
                             <input type="file" accept="image/*" name="image_users" id="form_image_users" onchange="loadFile(event)" >
-                            <img id="output"/>
+                            <img id="output" style="width: 200px; height: 200px"/>
                             <br><span class="text-danger" id="image_usersError"></span>
                         </div>
                     </div>
