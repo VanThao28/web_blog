@@ -51,8 +51,8 @@
                     <div class="form-group row  mb-3" name="image_users">
                         <label class="col-md-3 col-form-label">Upload</label>
                         <div class="col-md-9">
-                            <input type="file" accept="image/*" name="image_users" id="image_users" onchange="loadFile(event)">
-                            <img id="output"/>
+                            <input type="file" accept="image/*" name="image_users" id="image_users" onchange="loadFile(event)" style="width: 200px; height: 200px">
+                            <img id="output" />
                             <strong class="text-danger" id="edit_image_users_error"></strong>
                         </div>
                     </div>

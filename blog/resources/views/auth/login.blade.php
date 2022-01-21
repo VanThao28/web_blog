@@ -27,6 +27,7 @@
             <!-- Remember Me -->
             <div class="flex items-center justify-end mt-4">
 
+                <a href="{{route('password.request')}}">Forgot your password?</a>
             </div>
             <div class="flex items-center justify-end mt-4">
 {{--                 khong co mk--}}

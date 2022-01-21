@@ -22,7 +22,7 @@
                         <label class="col-md-2 col-form-label">Upload</label>
                         <div class="col-md-10">
                             <input type="file" accept="image/*" name="image_post" id="image_post" onchange="loadFile(event)">
-                            <img id="output"/>
+                            <img id="output" style="width: 200px; height: 200px"/>
                             <br><span class="text-danger" id="image_post_error"></span>
                         </div>
                     </div>

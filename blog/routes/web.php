@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AdminPostController;
 use App\Http\Controllers\Admin\AdminRoleController;
 use App\Http\Controllers\Clinet\CommentPost;
+use App\Http\Controllers\Admin\ResetPassController;
 /* Clinet*/
 use App\Http\Controllers\Clinet\IndexClinetController;
 use App\Http\Controllers\Clinet\DetailClinetController;
@@ -61,3 +62,6 @@ require __DIR__.'/auth.php';
     Route::get('/clinet/index', [IndexClinetController::class, 'index'])->name('index.clinet');
     Route::get('/details/{id}', [DetailClinetController::class, 'detail'])->name('clinet.detail');
     Route::get('/clinet/blog', [BlogClinetController::class, 'blog'])->name('clinet.blog');
+
+    Route::get('/forgotpassword',[ResetPassController::class, 'test']);
+    Route::get('/test-email',[ResetPassController::class, 'testEmail']);
